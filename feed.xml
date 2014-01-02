@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+<title type="text">Programming for fun!</title>
+<subtitle type="text">Just can't help chasing your beauty</subtitle>
+<generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
+<link rel="self" type="application/atom+xml" href="/feed.xml" />
+<link rel="alternate" type="text/html" href="" />
+<updated>2014-01-03T02:11:28+08:00</updated>
+<id>/</id>
+<author>
+  <name>Frei Zhang</name>
+  <uri>/</uri>
+</author>
+
+
+<entry>
+  <title type="html"><![CDATA[New Start]]></title>
+  <link rel="alternate" type="text/html" href="/blog/daily/2013/12/24/new-start" />
+  <id>/blog/daily/2013/12/24/new-start</id>
+  <published>2013-12-24T00:00:00+08:00</published>
+  <updated>2013-12-24T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri></uri>
+  </author>
+  <content type="html">&lt;p&gt;
+在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 &lt;a href=&quot;http://ifree.is-programmer.com&quot;&gt;is-programmer&lt;/a&gt;,
+&lt;a href=&quot;http://ifree.cnblogs.com/&quot;&gt;cnblogs&lt;/a&gt;, 但是最后统统烂尾. 中断博客的原因是因为我觉得自己胸无点墨, 写作
+技能又笨拙, 继续写下去很丢面子. 进而选择了本地博客,本地 wiki 来做笔记,
+记录思想. 可是在一次意外中, 由于我的疏忽, 丢失了硬盘的所有资料. 我开始
+尝试一些云端解决方案, 比如 dropbox, evernote, gdrive, 加上这两年痴迷于
+emacs, 所以我用 emacs 的 org-mode 来做日常的记录, 通过 dropbox 同步. 再
+后来, 也就是现在, 我决定摆脱伸手党这个称谓, 把自己的思考和别人分享, 接
+受批评, 共同进步.&lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+本博客是基于 jekyll 静态博客, 使用 &lt;a href=&quot;https://github.com/ColeTownsend/Balzac-for-Jekyll&quot;&gt;BALZAC&lt;/a&gt; theme 并做了一些小修改. 博
+客内容主要是游戏编程,c/c++ , unix like system, emacs 和函数式编程相关的
+内容. 
+&lt;/p&gt;
+
+&lt;p&gt;
+2013年就要过去, 希望在新的一年里活的开心!
+&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;/blog/daily/2013/12/24/new-start&quot;&gt;New Start&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;&quot;&gt;Programming for fun!&lt;/a&gt; on December 24, 2013.&lt;/p&gt;</content>
+</entry>
+
+</feed>
