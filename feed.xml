@@ -3,25 +3,25 @@
 <title type="text">Programming for fun!</title>
 <subtitle type="text">Just can't help chasing your beauty</subtitle>
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
-<link rel="self" type="application/atom+xml" href="/feed.xml" />
-<link rel="alternate" type="text/html" href="" />
-<updated>2014-01-03T11:21:39+08:00</updated>
-<id>/</id>
+<link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
+<link rel="alternate" type="text/html" href="http://programming4fun.com" />
+<updated>2014-01-03T13:40:43+08:00</updated>
+<id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
-  <uri>/</uri>
+  <uri>http://programming4fun.com/</uri>
 </author>
 
 
 <entry>
   <title type="html"><![CDATA[New Start]]></title>
-  <link rel="alternate" type="text/html" href="/blog/daily/2013/12/24/new-start" />
-  <id>/blog/daily/2013/12/24/new-start</id>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/daily/2013/12/24/new-start" />
+  <id>http://programming4fun.com/blog/daily/2013/12/24/new-start</id>
   <published>2013-12-24T00:00:00+08:00</published>
   <updated>2013-12-24T00:00:00+08:00</updated>
   <author>
     <name>Frei Zhang</name>
-    <uri></uri>
+    <uri>http://programming4fun.com</uri>
   </author>
   <content type="html">&lt;p&gt;
 在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 &lt;a href=&quot;http://ifree.is-programmer.com&quot;&gt;is-programmer&lt;/a&gt;,
@@ -44,7 +44,7 @@ emacs, 所以我用 emacs 的 org-mode 来做日常的记录, 通过 dropbox 同
 2013年就要过去, 希望在新的一年里活的开心!
 &lt;/p&gt;
 
-  &lt;p&gt;&lt;a href=&quot;/blog/daily/2013/12/24/new-start&quot;&gt;New Start&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;&quot;&gt;Programming for fun!&lt;/a&gt; on December 24, 2013.&lt;/p&gt;</content>
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/daily/2013/12/24/new-start&quot;&gt;New Start&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on December 24, 2013.&lt;/p&gt;</content>
 </entry>
 
 </feed>
