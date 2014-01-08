@@ -5,12 +5,389 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-01-03T13:40:43+08:00</updated>
+<updated>2014-01-09T01:47:01+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[GTD with org-mode]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/emacs/2014/01/08/gtd-with-org" />
+  <id>http://programming4fun.com/blog/emacs/2014/01/08/gtd-with-org</id>
+  <published>2014-01-08T00:00:00+08:00</published>
+  <updated>2014-01-08T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+随着工作越来越忙,平常的琐事越来越多,我发现,制订计划的需求就越来越高.现
+在网络上有许多 GTD 工具, 我也陆续使用过一些,比如说 anydo, remember the
+milk&amp;#x2026; 最后我都放弃了. 他们之中, 也不乏亮点, 可是对我来说最大的硬伤就
+是粘度不高. 我不可能一直记得来打开这些应用, 大脑在频繁的任务切换下也不
+会有太高的效率. 由于我的主要工作环境是 emacs, 它几乎常驻在于我这个用户
+的session 里, 于是, 在去年我开始在 emacs 的 org-mode 下做 GTD. 一直到现
+在, org-mode 帮助我完成了一个又一个目标, 我现在把自己的一些心得分享一下,
+希望能帮助到你. &lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;&lt;span class=&quot;section-number-2&quot;&gt;1&lt;/span&gt; org-mode 介绍&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+org-mode 是 emacs 下的一个纯文本模式. 由于高度自由且容易扩展, 可以用作
+TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,记笔记,做计划,
+还有就是写博客. 
+&lt;/p&gt;
+
+&lt;p&gt;
+现在我介绍一些 org-mode 的基础知识,以便你能快速入门, 想要更深入的了解,
+多看看&lt;a href=&quot;http://orgmode.org/#docs&quot;&gt;文档&lt;/a&gt;吧, org-mode 的文档还是比较丰富的.  
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-1&quot;&gt;&lt;span class=&quot;section-number-3&quot;&gt;1.1&lt;/span&gt; 基本操作&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
+&lt;p&gt;
+为了更高效的编辑 org 文件, 请忘掉你的鼠标, 避免工具的切换浪费时间.
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-1-1&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-1-1&quot;&gt;&lt;span class=&quot;section-number-4&quot;&gt;1.1.1&lt;/span&gt; heading 相关&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-1&quot;&gt;
+&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
+
+
+&lt;colgroup&gt;
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th scope=&quot;col&quot; class=&quot;left&quot;&gt;键位&lt;/th&gt;
+&lt;th scope=&quot;col&quot; class=&quot;left&quot;&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;M-&amp;lt;left&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;插入一个同级 heading&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-&amp;lt;RET&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;插入一个非同级 heading&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;M-&amp;lt;let&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;增加当前 heading 的级别&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;M-&amp;lt;right&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;减少当前 heading 的级别&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;M-s-&amp;lt;left&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;增加当前 heading 及其子项的级别&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;M-s-&amp;lt;right&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;减少当前 heading 及其子项的级别&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-1-2&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-1-2&quot;&gt;&lt;span class=&quot;section-number-4&quot;&gt;1.1.2&lt;/span&gt; 移动&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-2&quot;&gt;
+&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
+
+
+&lt;colgroup&gt;
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th scope=&quot;col&quot; class=&quot;left&quot;&gt;键位&lt;/th&gt;
+&lt;th scope=&quot;col&quot; class=&quot;left&quot;&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-c C-p&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;移动到上一个 heading&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-c C-n&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;移动到下一个 heading&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-c C-f&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;移动到上一个同级 heading&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-c C-b&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;移动到下一个同级 heading&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-c C-u&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;移动到上一级 heading&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-1-3&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-1-3&quot;&gt;&lt;span class=&quot;section-number-4&quot;&gt;1.1.3&lt;/span&gt; &lt;code&gt;TODO&lt;/code&gt; 相关&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-3&quot;&gt;
+&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
+
+
+&lt;colgroup&gt;
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th scope=&quot;col&quot; class=&quot;left&quot;&gt;键位&lt;/th&gt;
+&lt;th scope=&quot;col&quot; class=&quot;left&quot;&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;C-c C-t&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;使一个 heading 成为 TODO&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;s-&amp;lt;left&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;切换当前 TODO 项到下一个状态&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;s-&amp;lt;right&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;切换当前 TODO 项到上一个状态&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;&lt;code&gt;S-M-&amp;lt;ret&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;添加一个 TODO 项&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;&lt;span class=&quot;section-number-2&quot;&gt;2&lt;/span&gt; 用 org-mode 来做 GTD&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+上面就是我经常用到的 org-mode 命令, 现在我们说说我平时是怎么做 GTD 的.
+我把我每天要做的事情分成几类, 工作, 生活, 学习, 和一个优先级最高, 或者
+马上可以完成的类型 (today.org). 目录结构大致如下:
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(directory-files &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/Projects/org/plan&quot;&lt;/span&gt; t &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\.org$&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
+
+
+&lt;colgroup&gt;
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+
+&lt;col  class=&quot;left&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/dev.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/math.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/personal.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/reading.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/today.org&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;
+为了方便查找, 统计, 我用到了 TODO 关键字和 tag 来分类, 这让我很容易就能
+定位到具体任务. 你可以看到, 任务关键字我分了3类 普通任务, coding 和任务
+状态,关键字也进行了分组, 你可以根据自己的喜好或者计划来定制它.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;code&gt;org-todo-keywords&lt;/code&gt; :
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(setq org-todo-keywords&amp;#57344;&amp;#57345;&amp;#57345;
+      (quote ((sequence &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;TODO(t)&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;STARTED(s)&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;|&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;DONE(d!/!)&quot;&lt;/span&gt; )&lt;span style=&quot;color: #ff4500;&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: #ff4500;&quot;&gt;general tasks&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+              (sequence &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;CODING&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;TESING&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;REFACTOR(!/@)&quot;&lt;/span&gt;  &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;|&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;REVIEW(/@)&quot;&lt;/span&gt;)&lt;span style=&quot;color: #ff4500;&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: #ff4500;&quot;&gt;coding&lt;/span&gt;&amp;#57344;&amp;#57345;
+              (sequence &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;WAITING(w@/!)&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;SOMEDAY(S)&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;PROJECT&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;DELEGATED(@/)&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;|&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;CANCELLED(c@/!)&quot;&lt;/span&gt;))))&lt;span style=&quot;color: #ff4500;&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: #ff4500;&quot;&gt;task states&lt;/span&gt;&amp;#57344;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+&lt;code&gt;org-tag-alist&lt;/code&gt; :
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(setq org-tag-alist &#39;((&lt;span style=&quot;color: #b0c4de;&quot;&gt;:startgroup&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;@work&quot;&lt;/span&gt; . ?w) &amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;@home&quot;&lt;/span&gt; . ?h)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;@coffee shop&quot;&lt;/span&gt; . ?t)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #b0c4de;&quot;&gt;:endgroup&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #b0c4de;&quot;&gt;:startgroup&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;laptop&quot;&lt;/span&gt; . ?l)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;pc&quot;&lt;/span&gt; . ?p)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;phone&quot;&lt;/span&gt; .?P)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #b0c4de;&quot;&gt;:endgroup&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #b0c4de;&quot;&gt;:startgroup&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;dev&quot;&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;personal&quot;&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;blog&quot;&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;thought&quot;&lt;/span&gt; .nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      (&lt;span style=&quot;color: #b0c4de;&quot;&gt;:endgroup&lt;/span&gt; . nil)&amp;#57344;&amp;#57345;&amp;#57345;
+                      ))&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+读到了这里, 你可能会想, 这是很基本的 GTD 功能啊, 我凭什么用 org-mode !
+别急, 我现在介绍两个杀手级的 feature, 保证让你爱不释手. 
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;b&gt;agenda view&lt;/b&gt; 相当于是一个灵活的统计,图表工具, 可以非常灵活的定制, . 来看
+看我的配置,大致有3个功能. 你可以根据需要, 自己加, 记住 &lt;b&gt;RTFM&lt;/b&gt;.
+&lt;/p&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;查看今天需要完成的任务
+&lt;/li&gt;
+&lt;li&gt;没有完成的任务
+&lt;/li&gt;
+&lt;li&gt;存档的任务
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(setq org-agenda-custom-commands&amp;#57344;&amp;#57345;&amp;#57345;
+      &#39;((&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;c&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;things I should today&quot;&lt;/span&gt; alltodo &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+         ((org-agenda-overriding-header &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;Hey man, you need finish these today!&quot;&lt;/span&gt;)&amp;#57345;
+          (org-agenda-files &#39;(&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/Projects/org/plan/today.org&quot;&lt;/span&gt;))))&amp;#57344;&amp;#57345;&amp;#57345;
+        (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;p&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;pending todo&quot;&lt;/span&gt; todo &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;WAITING|SOMEDAY&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+        (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;view archieved task&quot;&lt;/span&gt; todo &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;CANCELLED|DELEGATED|DONE&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+         ((org-agenda-files (directory-files-rec &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/Projects/org&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\.archive$&quot;&lt;/span&gt;))))))&amp;#57344;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+除了灵活的统计视图, org-mode 还能让你快速的记录自己任务, 当然, 这不限于
+任务, 也可以是偶然获得的灵感, 事件记录等. 这便是 &lt;code&gt;org-capture&lt;/code&gt; 功能. 同时也贴上我的配置:
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(setq org-capture-templates&amp;#57344;&amp;#57345;&amp;#57345;
+      &#39;((&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;t&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;Today&#39;s TODO&quot;&lt;/span&gt; entry (file+headline org-default-notes-file &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&amp;#27599;&amp;#26085;TODO!&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;
+         &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;** TODO %?\n %i\n %T&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+        (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;T&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;Thoughts&quot;&lt;/span&gt; entry &amp;#57344;&amp;#57345;&amp;#57345;
+         (file+headline (concat org-directory &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;/plan/personal.org&quot;&lt;/span&gt; ) &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;random thoughts&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;
+         &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;** %?\n %i\n %T&quot;&lt;/span&gt;)))&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-1&quot;&gt;&lt;span class=&quot;section-number-3&quot;&gt;2.1&lt;/span&gt; 彩蛋!&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
+&lt;p&gt;
+以上就是 org-mode 做 GTD 的基本配置, 我来说说我发现的彩蛋吧, 很方便. 
+&lt;/p&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;task change logging
+任务状态改变之后( TODO -&amp;gt; DELEGATED), 你可以加上一个时间戳或者加一段note
+看下面  &lt;code&gt;!&lt;/code&gt; 就是时间戳, &lt;code&gt;@&lt;/code&gt; 就是note. &lt;code&gt;/&lt;/code&gt; 来区分状态的前后.
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(sequence &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;CODING&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;TESING&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;REFACTOR(!/@)&quot;&lt;/span&gt;  &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;|&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;REVIEW(/@)&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;checkboxes
+  &lt;code&gt;M-S-&amp;lt;RET&amp;gt;&lt;/code&gt; 插入 checkbox
+&lt;/li&gt;
+&lt;li&gt;archive 
+  &lt;code&gt;C-c C-x C-s&lt;/code&gt; 存档当前条目
+&lt;/li&gt;
+&lt;li&gt;agenda view
+  &lt;code&gt;M-x org-agenda&lt;/code&gt; 一般绑定键位为 &lt;code&gt;C-a a&lt;/code&gt;
+&lt;/li&gt;
+&lt;li&gt;priorities
+每个 TODO 都可以设置优先级 快捷键 &lt;code&gt;S-&amp;lt;UP&amp;gt;&lt;/code&gt; &lt;code&gt;S-&amp;lt;DOWN&amp;gt;&lt;/code&gt;
+&lt;/li&gt;
+&lt;li&gt;deadline, schedule &amp;#x2026;.
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+先这么多吧, 够你看一会的了. 用 emacs 不需要死记硬背, 这些 tricks 你会慢
+慢知道的. 记住, tricks 不是银弹.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;&lt;span class=&quot;section-number-2&quot;&gt;3&lt;/span&gt; 后记&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+工具再好, 缺乏执行力也是徒劳. 工具的作用是辅助你来完成计划, 需要你的主
+观能动配合, 如果这一步都迈不出去的话, 洗洗睡吧.
+&lt;/p&gt;
+
+&lt;p&gt;
+祝你战胜自己!
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/emacs/2014/01/08/gtd-with-org&quot;&gt;GTD with org-mode&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on January 08, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
