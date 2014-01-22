@@ -5,12 +5,165 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-01-09T01:47:01+08:00</updated>
+<updated>2014-01-23T01:47:11+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[doubanfm html5]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/dev/2014/01/21/doubanfm-html5" />
+  <id>http://programming4fun.com/blog/dev/2014/01/21/doubanfm-html5</id>
+  <published>2014-01-21T00:00:00+08:00</published>
+  <updated>2014-01-21T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+大家都知道 flash player 在 *nix 平台上的表现有多糟, 一打开 douban fm 风扇就开始狂
+转, 这阵势就像要把我 CPU 献祭一样, 我是不能容忍它的. 于是, 我造了这个轮子&amp;#x2013; 写了
+dobanfm 的 html5 版. &lt;a href=&quot;https://github.com/ifree/doubanfm-html5&quot;&gt;项目地址&lt;/a&gt;, &lt;a href=&quot;http://userscripts.org/scripts/show/292624&quot;&gt;userscript&lt;/a&gt; . 下面是我这个业余 js 开发人员的一些开
+发记录. &lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;js 开发环境配置&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+首先, 这个配置是基于我的默认编辑器 emacs 的, 所以肯定有一些读者没有考虑到(也许我
+的博客根本没人看,笑)
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-1&quot;&gt;major-mode&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-1-1-1&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-1-1&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Js2Mode&quot;&gt;js2-mode&lt;/a&gt;&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-1&quot;&gt;
+&lt;p&gt;
+emacs 自带了 javascript-mode , 这个模式提供了主要的语法高亮和基本的缩进. 用来看代
+码是足够了. 如果想更畅快的编辑写代码, 推荐使用 js2-mode . 它可是算是最好的
+javascript 模式了. js 1.5 - 1.8 都支持, 而且支持 &lt;a href=&quot;http://en.wikipedia.org/wiki/ECMAScript_for_XML&quot;&gt;e4x&lt;/a&gt; , 代码折叠, 也有更智能的缩
+进. 还有很多 feature 没有介绍, 就留给你来发掘了. 
+&lt;/p&gt;
+
+&lt;p&gt;
+如果你是 &lt;a href=&quot;https://npmjs.org/&quot;&gt;npm&lt;/a&gt; 开发者的话, 可以考虑 &lt;a href=&quot;https://github.com/thomblake/js3-mode&quot;&gt;js3-mode&lt;/a&gt; , 兼容 js2-mode, 同时提供 &lt;a href=&quot;https://github.com/npm/npm/blob/master/doc/misc/npm-coding-style.md&quot;&gt;npm-styl&lt;/a&gt;e 支
+持. npm-style 看起来确实不错, 但是我不是专职的 js 开发人员, 所以还是照
+&lt;a href=&quot;http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml&quot;&gt;google-js-style&lt;/a&gt; 来吧.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-1-2&quot;&gt;minor-mode&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-2&quot;&gt;
+&lt;/div&gt;&lt;div id=&quot;outline-container-sec-1-2-1&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-2-1&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Yasnippet&quot;&gt;yasnippets&lt;/a&gt;&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-1&quot;&gt;
+&lt;p&gt;
+主流的 IDE 都会有代码段自动补全功能, emacs 自然不会落下. yasnippets 就是emacs 下
+的一个强大的补全工具, 代码段模板兼容 TextMate 的模板语法.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-2-2&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-2-2&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Flycheck&quot;&gt;flycheck&lt;/a&gt;&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-2&quot;&gt;
+&lt;p&gt;
+这是 emacs 上取代 flymake 的一个实时代码检查工具 (check your code on the fly). 配
+合 &lt;a href=&quot;http://en.wikipedia.org/wiki/JSLint&quot;&gt;jslint&lt;/a&gt; 可以随时让我知道那里的代码有问题, 减少调试时间. jslint 是 js 开发者必不
+可少的代码规范检查工具, 大家使用 jslint 一般可能会用 make file (现在一般用 &lt;a href=&quot;http://gruntjs.com/&quot;&gt;Grunt&lt;/a&gt;) 定义一个 lint 的
+target, 这个属于 post checking. flycheck 则可以让你做到 realtime checking, 多爽!
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-2-3&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-2-3&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Projectile&quot;&gt;projectile&lt;/a&gt;&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-3&quot;&gt;
+&lt;p&gt;
+作为一个轻量的项目文件管理工具, projectile 是我最喜欢用的. 没有第三方依赖, 提供大
+部分项目文件管理功能: 浏览, 快速查找, 最近使用文件列表, 文件跳转, 项目切换, 项目
+tags 文件生成,等. 如果你的需求更加复杂, 请移步 &lt;a href=&quot;http://www.emacswiki.org/emacs/EmacsCodeBrowser&quot;&gt;ECB&lt;/a&gt;.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-2-4&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-2-4&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/AutoComplete&quot;&gt;AutoComplete&lt;/a&gt;&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-4&quot;&gt;
+&lt;p&gt;
+自动补全功能是现代 IDE 的一大杀器, 通过静态分析, 语法树解析, tags等手段来补全代码
+让程序员的效率大大提升. AutoComplete 模式可以利用 js2 的语法上下文来补全, 也可以
+根据当前关键字来补全, 这样让 emacs 一点也不逊色与那些 IDE 
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-1-2-5&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;sec-1-2-5&quot;&gt;&lt;a href=&quot;https://github.com/skeeto/skewer-mode&quot;&gt;skewer&lt;/a&gt;&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-5&quot;&gt;
+&lt;p&gt;
+最后献上必杀技 skewer-mode , 它简直就是为 javascript 快速开发的而生的. 真是即写即
+所得. 它通过 &lt;a href=&quot;https://github.com/skeeto/emacs-http-server&quot;&gt;simple-httpd&lt;/a&gt; 做后端并使用 &lt;a href=&quot;http://en.wikipedia.org/wiki/Comet_%2528programming%2529&quot;&gt;comet&lt;/a&gt; 技术来进行 http 长连接实现推送
+代码到浏览器并获得执行结果. 所以, 你在写代码的时候可以立即验证自己的代码. 想了解
+更多 comet 可以看看我以前翻译的&lt;a href=&quot;http://ifree.is-programmer.com/2010/11/2/websockets_everywhere_with_socket-io.22344.html&quot;&gt;文章&lt;/a&gt; 
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;js 代码风格,注意事项&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+一般我的代码会通过 flycheck 和 jslint 配合, 所以风格应该不会有太大的问题. 现在说
+说 jslint 吧. 就像c &lt;a href=&quot;http://en.wikipedia.org/wiki/Lint_%2528software%2529&quot;&gt;lint&lt;/a&gt; 一样这是一种代码风格检查工具. 它会发现你代码的潜在漏洞,
+让你不至于写出太多漏洞的代码. 不过需要提到的是, lint 虽好, 自己没有写好代码的意识
+的话, 没用. jslint 的规则主要参照&lt;a href=&quot;http://javascript.crockford.com/code.html&quot;&gt;这里&lt;/a&gt; 的代码约定. 可能有时候你可能觉得它太严格了.
+没问题, 你可以让它容忍一些代码风格. 其他的介绍看&lt;a href=&quot;http://www.jslint.com/lint.html&quot;&gt;这里&lt;/a&gt; . 
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;svg 相关&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+从源码看你知道 UI 部分是用 &lt;a href=&quot;http://en.wikipedia.org/wiki/Scalable_Vector_Graphics&quot;&gt;svg&lt;/a&gt; 画的, 作为一个 web UI 门外汉来说, svg/&lt;a href=&quot;http://en.wikipedia.org/wiki/Vector_Markup_Language&quot;&gt;vml&lt;/a&gt; 无疑解救
+了我. 以前我还用 IE 的时候知道了 vml , 对这种不用关心各种怪异的 css/js bug,直接用
+xml 来描述的语言真是很向往,进而流连于各种 vml webart 中.后来 vml 过时了,哈哈. 取
+而代之的是 svg, webkit 系, netscape 系的都有很好的支持, 所以大概了解了一下. 你可
+以把他们看作是一种图形描述语言. 因为可以描述, 所以无论怎么缩放图像质量也不会变差.
+我通过 &lt;a href=&quot;http://en.wikipedia.org/wiki/Inkscape&quot;&gt;inkspace&lt;/a&gt; 照这 doubamfm 拖了个大概, 然后用 javascript 访问其 dom, 很像
+html 的 dom, 所以代码写起来也不是很麻烦. 
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-4&quot;&gt;总结&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
+&lt;p&gt;
+这个项目是我利用业余时间写好的, 花了两个晚上, 用 inkscape 画界面是最折腾我的,
+Orz. 其余时间就是看 web audio 文档, 和研究 douban 协议. 我没有实现 volume
+control 是因为那东西比较难画, 功能实现不是太难. 还有一个就是登陆, 我也不想画界面
+了, 如果谁想忙帮的话, 欢迎 pull request. 另外就是 vip 用户的功能, 我没有开通
+vip, 所以没时间研究. 有什么问题的话也可以直接在项目上开 issue.
+&lt;/p&gt;
+
+&lt;p&gt;
+匆匆忙忙写好了这篇博文. 还是再说几句. 日常开发时, 要对自己的要求稍微严格一点. 对
+于工具要善于利用, 对于本来时间就不多的大家来说这是很宝贵的. 做好项目计划, 不管是
+正式项目还是业余项目, 细分目标. 如果像以前, 这个项目不知道又要到何年何月才写的
+完&amp;#x2026; 好了,洗洗睡了.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/dev/2014/01/21/doubanfm-html5&quot;&gt;doubanfm html5&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on January 21, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -35,7 +188,7 @@ milk&amp;#x2026; 最后我都放弃了. 他们之中, 也不乏亮点, 可是对
 &lt;/p&gt;
 
 &lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;&lt;span class=&quot;section-number-2&quot;&gt;1&lt;/span&gt; org-mode 介绍&lt;/h2&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;org-mode 介绍&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
 &lt;p&gt;
 org-mode 是 emacs 下的一个纯文本模式. 由于高度自由且容易扩展, 可以用作
@@ -50,7 +203,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 
 &lt;div id=&quot;outline-container-sec-1-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-1-1&quot;&gt;&lt;span class=&quot;section-number-3&quot;&gt;1.1&lt;/span&gt; 基本操作&lt;/h3&gt;
+&lt;h3 id=&quot;sec-1-1&quot;&gt;基本操作&lt;/h3&gt;
 &lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
 &lt;p&gt;
 为了更高效的编辑 org 文件, 请忘掉你的鼠标, 避免工具的切换浪费时间.
@@ -58,7 +211,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 
 &lt;div id=&quot;outline-container-sec-1-1-1&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-1-1&quot;&gt;&lt;span class=&quot;section-number-4&quot;&gt;1.1.1&lt;/span&gt; heading 相关&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-1-1&quot;&gt;heading 相关&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-1&quot;&gt;
 &lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
 
@@ -109,7 +262,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&quot;outline-container-sec-1-1-2&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-1-2&quot;&gt;&lt;span class=&quot;section-number-4&quot;&gt;1.1.2&lt;/span&gt; 移动&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-1-2&quot;&gt;移动&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-2&quot;&gt;
 &lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
 
@@ -155,7 +308,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&quot;outline-container-sec-1-1-3&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-1-3&quot;&gt;&lt;span class=&quot;section-number-4&quot;&gt;1.1.3&lt;/span&gt; &lt;code&gt;TODO&lt;/code&gt; 相关&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-1-3&quot;&gt;&lt;code&gt;TODO&lt;/code&gt; 相关&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-3&quot;&gt;
 &lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
 
@@ -198,7 +351,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;&lt;span class=&quot;section-number-2&quot;&gt;2&lt;/span&gt; 用 org-mode 来做 GTD&lt;/h2&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;用 org-mode 来做 GTD&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
 &lt;p&gt;
 上面就是我经常用到的 org-mode 命令, 现在我们说说我平时是怎么做 GTD 的.
@@ -329,7 +482,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 
 &lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;sec-2-1&quot;&gt;&lt;span class=&quot;section-number-3&quot;&gt;2.1&lt;/span&gt; 彩蛋!&lt;/h3&gt;
+&lt;h3 id=&quot;sec-2-1&quot;&gt;彩蛋!&lt;/h3&gt;
 &lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
 &lt;p&gt;
 以上就是 org-mode 做 GTD 的基本配置, 我来说说我发现的彩蛋吧, 很方便. 
@@ -373,7 +526,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;&lt;span class=&quot;section-number-2&quot;&gt;3&lt;/span&gt; 后记&lt;/h2&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;后记&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
 &lt;p&gt;
 工具再好, 缺乏执行力也是徒劳. 工具的作用是辅助你来完成计划, 需要你的主
