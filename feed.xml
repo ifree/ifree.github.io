@@ -5,12 +5,193 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-01-23T01:47:11+08:00</updated>
+<updated>2014-02-19T02:54:55+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[breakpad on android]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/android/dev/2014/02/13/breakpad-on-android" />
+  <id>http://programming4fun.com/blog/android/dev/2014/02/13/breakpad-on-android</id>
+  <published>2014-02-13T00:00:00+08:00</published>
+  <updated>2014-02-13T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+最近给项目集成了 &lt;a href=&quot;https://code.google.com/p/google-breakpad&quot;&gt;breakpad&lt;/a&gt;, 一款开源 crash report 系统. 对 crash 捕获, dump 数据生
+成, dump 文件分析, 还有 dump 文件上传,都有很好的支持. 据我所知, firefox,
+chromium 等项目都集成了它. 从官方文档上看, 此项目对 linux 的支持也只是有限,
+android 的话就更有限了. 不过即便是有限的支持, 对于我们的项目来说已经足够了. 现在
+我来介绍一下我的经验. &lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;breakpad 介绍&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+其实说到这里, 你应该也大概知道 Breakpad 是什么东西了, 他是一个跨平台的 crash
+report system. 
+&lt;/p&gt;
+
+&lt;p&gt;
+现代的操作系统能良好的隔离每个程序的内存空间. 如果一个程序崩溃了,操作系统同样正常
+运行. 各个平台有独自的程序生命周期管理. 拿 linux 来说, 如果一个程序胡作非为, 操作
+系统看不下去了便给他一个信号eg. SIGKILL. 那意味着它就死了. 这时操作系统就像一个末
+日审判让你无法与他对抗. 扯远了, 其实主要操作就是 handle 程序crash 的信号, 然后生
+成平台无关的 dump 文件. 有了这个 dump 文件, 你就可以对分析,改进自己的程序. 正好
+android 内核也是 linux, 那么 breakpad 在 android 下同样可以工作.
+&lt;/p&gt;
+
+&lt;p&gt;
+Breakpad 还有 dump 文件解析功能, 同时提供了 &lt;code&gt;minidump_stackwalk&lt;/code&gt; 这个工具来分析
+dump 文件.  &lt;code&gt;minidump_stackwalk&lt;/code&gt; 能结合程序的 symbol 文件打印出程序 crash 时的详细
+调用堆栈, 这对分析,调试有很大帮助.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;集成过程&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+从源码 checkout 之后,我就准备了两种解决方案, 一种是编进我们的的代码. 另一种是在
+andoird 下直接运行 &lt;code&gt;minidump_stackwalk&lt;/code&gt;. 由于我们项目内存管理的复杂性和性能需要, 没
+有链接部分 breakpad 的库且编译选项有冲突, 再加上我们项目的内存管理方式等因素, 让
+我放弃了集成 breakpad 代码到项目中的想法. 于是我就又交叉编译了
+&lt;code&gt;minidump_stackwalk&lt;/code&gt;. 项目已经开源, 地址:
+&lt;a href=&quot;https://github.com/ifree/Breakpad-android&quot;&gt;https://github.com/ifree/Breakpad-android&lt;/a&gt; .
+&lt;/p&gt;
+
+&lt;p&gt;
+项目依赖 google-breakpad 请移步项目 svn 检出最新源码. &lt;code&gt;tools/android.patch&lt;/code&gt; 是我
+对 breakpad 做出的改动.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-2-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-1&quot;&gt;交叉编译&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-1&quot;&gt;
+&lt;p&gt;
+如果需要交叉编译 &lt;code&gt;minidump_stackwalk&lt;/code&gt; 请看 &lt;code&gt;tools/ndk-configure.sh&lt;/code&gt;, 只需指定
+ndk 路径, 处理器架构. 编译之前检查下脚本, 以防万一.
+&lt;/p&gt;
+
+&lt;p&gt;
+编译完成你应该能得到 &lt;code&gt;$google-breakpad-path/src/processor/minidump_stackwalk&lt;/code&gt;,我也
+编译好了一个, 你可以直接使用. 不过有一点需要补充, 这是修改版的
+&lt;code&gt;minidump_stackwalk&lt;/code&gt;. 使用示例参见 &lt;code&gt;com.ifree.breakpad.BreakpadAgent&lt;/code&gt;, 原理是使用
+java 执行 &lt;code&gt;minidump_stackwalk&lt;/code&gt; , 并读取输出流.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-2-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-2-2&quot;&gt;集成代码&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-2&quot;&gt;
+&lt;p&gt;
+关于集成代码, 参见 BreakpadAgent.java 方法 &lt;code&gt;public native void
+getBacktrace(String dumpFile,String symbolPath);&lt;/code&gt;, 本地主要实现
+&lt;code&gt;jni/BreakpadAgent.cpp&lt;/code&gt;. 代码量没有多少.
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-sh&quot;&gt;ls ~/Dev/projects/Breakpad-android/jni&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
+
+
+&lt;colgroup&gt;
+&lt;col  class=&quot;left&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;Android.mk&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;Application.mk&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;BreakpadAgent.cpp&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;BreakpadHelper.cpp&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;BreakpadHelper.h&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td class=&quot;left&quot;&gt;minidump&lt;sub&gt;stackwalk&lt;/sub&gt;.cc&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;
+你可能需要注意这些东西:
+&lt;/p&gt;
+
+&lt;p&gt;
+复制 &lt;code&gt;tools/Android_processor.mk&lt;/code&gt; 到
+&lt;code&gt;$google-breakpad-path/android/google_breakpad/Android_processor.mk&lt;/code&gt; 并在项目 mk
+文件中 include 它, 具体例子参看 &lt;code&gt;jni/android.mk&lt;/code&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+请看 BreakpadHelper 的方法 &lt;code&gt;bool backtrace(const char*,const
+char*,File_exists_handler,File_read_handler,Free_memory_handler)&lt;/code&gt; 如果这三个
+handler 为空的话, 会尝试读取 sd 卡上的 symbol 文件, 在 BreakpadAgent.cpp 中, 我实
+现了 ndk 对 android assets 目录资源的读取, 如果你想项目没有什么特殊需求的话, 推荐
+用它们.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;遇到的坑&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+android 中, jni 只允许创建一个 jvm, 且不能共享 JNIEnv, 必须共享 JVM.
+&lt;/p&gt;
+
+&lt;p&gt;
+java 的泛型擦除与 jni. jni 在调用 java 方法时, 需要指定方法,类签名, 但是泛型会被
+擦除, 在 jvm 下, 泛型是个幌子而已, 具体请看 core java v7 vol1 中关于泛型的描述.
+&lt;/p&gt;
+
+&lt;p&gt;
+编译项目 jni 目录之外的文件. 这个说来话长, &lt;code&gt;ndk-build&lt;/code&gt; 会根据当前 &lt;code&gt;LOCAL_PATH&lt;/code&gt; 来
+搜索文件, 所以经常会遇到各种错误. 需要重设 &lt;code&gt;LOCAL-PATH&lt;/code&gt; 来解决, 但是如果项目过于
+复杂, 这种方法不可取. 简单的方法是 新建 mk 文件, 参考我的 &lt;code&gt;Android_processor.mk&lt;/code&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+android 创建进程时, 如果进程有大量的输出流发送到 &lt;code&gt;stdout&lt;/code&gt; 的话, 会造成 android 挂
+起. 解决办法是, 读取进程的输出流.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-4&quot;&gt;总结&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
+&lt;p&gt;
+匆忙的整理完这个工具, 没有太详细的注释, 不过代码应该还是清晰的, 具体使用方法也可
+以看测试 app. 希望能对你有所帮助. 有问题或者 bug 欢迎给我 issue.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/android/dev/2014/02/13/breakpad-on-android&quot;&gt;breakpad on android&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on February 13, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
