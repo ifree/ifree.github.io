@@ -5,12 +5,114 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-02-19T02:54:55+08:00</updated>
+<updated>2014-03-27T02:27:34+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[emacs as doubanfm client]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/emacs/firefox-plugin/2014/03/27/fm-emacs-client" />
+  <id>http://programming4fun.com/blog/emacs/firefox-plugin/2014/03/27/fm-emacs-client</id>
+  <published>2014-03-27T00:00:00+08:00</published>
+  <updated>2014-03-27T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+晚上写东西喜欢听点小曲儿, 给自己放松放松. 我不太喜欢下载音乐, 更倾向于在线的形式,
+这样选择更多, 让我这种拖延症患者不至于听腻了没时间换. 所以 doubanfm 是个很好的选
+择. 
+&lt;/p&gt;
+
+&lt;p&gt;
+之前给 firefox 写了个 doubanfm html5 播放器, 用来解决 flash 插件耗电耗 cpu 的问题.
+为了能让我的 doubanfm 得到更好的锻炼, 让机器学习的结果更加接近我的喜好, 我需要在
+doubanfm 网站上做一些交互(跳过, 喜欢之类的). 这样我在遇到不喜欢的歌曲就需要我停下
+手上的事情去切歌, 或者在思考的时候暂停. 这样太影响效率, 所以昨天晚上我停下手头上
+的事情把这个东西写好了. (果然, 在拖延症面前, 其他小事都比当前的事重要 orz) 由于我
+的主要开发工具是 emacs, 所以我就写了 emacs 插件. firefox 也是我的首选浏览器, 自由
+度高, 足够开放, 可以各种 hack, 所以我也写了 ff 的插件, 主要方便我在其他 tab 中直
+接切换歌曲而不用手动切到 doubanfm 的 tab. 
+&lt;/p&gt;
+
+&lt;p&gt;
+这完全是写着玩的, 大概介绍一下. 项目地址: &lt;a href=&quot;https://github.com/ifree/douban-ff.git&quot;&gt;https://github.com/ifree/douban-ff.git&lt;/a&gt;
+&lt;!-- break --&gt;  
+&lt;/p&gt;
+
+&lt;p&gt;
+你可能想知道 emacs 是如何与 firefox 交互的吧. 我用了一个插件 &lt;a href=&quot;https://github.com/bard/mozrepl&quot;&gt;moz-repl&lt;/a&gt;, 其内部会创
+建一个 &lt;code&gt;server_socket&lt;/code&gt; 对象来处理请求, 把接收到的请求作为 js 脚本执行, 所以
+emacs 只需要向它发送 js 脚本就可以完成执行操作. moz-repl 其实也是一个 ff 插件开发
+利器. 再贴一点具体实现的代码, 如下:
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(&lt;span style=&quot;color: #00ffff;&quot;&gt;defun&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;send-to-ff&lt;/span&gt; (content)&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;send js to firefox to execute&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+  (comint-send-string (inferior-moz-process)&amp;#57344;&amp;#57345;&amp;#57345;
+                      content&amp;#57344;&amp;#57345;&amp;#57345;
+                      )&amp;#57344;&amp;#57345;&amp;#57345;
+  )&amp;#57344;&amp;#57345;&amp;#57345;
+&amp;#57344;&amp;#57345;&amp;#57345;
+(&lt;span style=&quot;color: #00ffff;&quot;&gt;defun&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;ff-exec-script-in-tabs&lt;/span&gt; (script url-regex) &amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;script injection&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+  (send-to-ff&amp;#57344;&amp;#57345;&amp;#57345;
+   (format &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffc0cb; font-weight: bold;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #ffa07a;&quot;&gt;function(script,u){&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;        [].forEach.call(gBrowser.tabs,function(itm){&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;            var ctab=itm.linkedBrowser;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;            if(ctab.contentDocument.location.host.match(u)){&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;                var s=ctab.contentDocument.createElement(&#39;script&#39;)&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;                s.textContent=script;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;                ctab.contentDocument.body.appendChild(s);&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;            }&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;        });        &lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;    })(\&quot;%s\&quot;,\&quot;%s\&quot;);&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+script url-regex&amp;#57344;&amp;#57345;&amp;#57345;
+)&amp;#57344;&amp;#57345;&amp;#57345;
+   )&amp;#57344;&amp;#57345;&amp;#57345;
+  )&amp;#57344;&amp;#57345;&amp;#57345;
+&amp;#57344;&amp;#57345;&amp;#57345;
+(&lt;span style=&quot;color: #00ffff;&quot;&gt;defun&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;fm-skip&lt;/span&gt; ()&amp;#57344;&amp;#57345;&amp;#57345;
+  (interactive)&amp;#57344;&amp;#57345;&amp;#57345;
+  (fm-exec &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;DBR.act(&#39;skip&#39;)&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+  )&amp;#57344;&amp;#57345;&amp;#57345;
+&amp;#57344;&amp;#57345;&amp;#57345;
+(&lt;span style=&quot;color: #00ffff;&quot;&gt;defun&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;fm-copy-song&lt;/span&gt; ()&amp;#57344;&amp;#57345;&amp;#57345;
+  (interactive)&amp;#57344;&amp;#57345;&amp;#57345;
+  (fm-exec &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;document.title=FM.getCurrentSongInfo().url&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+  (send-to-ff &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffc0cb; font-weight: bold;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot;color: #ffa07a;&quot;&gt;].forEach.call(gBrowser.tabs,function(itm){&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;            var ctab=itm.linkedBrowser;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;            if(ctab.contentDocument.location.host.match(&#39;douban\.fm&#39;)){&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;                Components.classes[&#39;@mozilla.org/widget/clipboardhelper;1&#39;]&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;                .getService(Components.interfaces.nsIClipboardHelper)&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;                .copyString(ctab.contentTitle);&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ffa07a;&quot;&gt;            }});&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+))&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+关键点就在如何向 firefox 的某个 tab 注入代码, 很简单, 动态构建 script. 
+&lt;/p&gt;
+
+
+&lt;p&gt;
+好了, 工具也写好了, 继续做事 :&amp;gt;
+&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/emacs/firefox-plugin/2014/03/27/fm-emacs-client&quot;&gt;emacs as doubanfm client&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on March 27, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
