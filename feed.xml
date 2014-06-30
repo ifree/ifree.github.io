@@ -5,12 +5,208 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-03-27T02:27:34+08:00</updated>
+<updated>2014-07-01T00:21:40+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[deobfuscate javascript with emacs]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs" />
+  <id>http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs</id>
+  <published>2014-06-28T00:00:00+08:00</published>
+  <updated>2014-06-28T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+javascript 是现在比较流行的脚本语言, 无论是前端, 还是后端都可以见到它的影子.  js
+是动态语言, 它会被宿主解释执行. 每次浏览到一些很酷的页面, 我都会好奇的打开
+developer console 对它探个究竟. 打开脚本面板然后 pretty print, 通常我都会得到自己
+想的结果. 可是, 好奇心不会总是那么容易被满足, 许多网站主可能出于一些目的混淆了自
+己的脚本. 我来说说我的解决方案. &lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+js 不像静态语言,可以编译成机器识别的本地代码, 或者对应 vm 的字节码, 它的源代码是
+直接暴露给解释器的. 所以得到 js 的源代码相对静态语言来说, 非常容易. 所以, 只能通
+过混淆源代码来增加阅读难度. 通常 js 的混淆方式有这么几种,
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;代码压缩&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;p&gt;
+这个最好解决, 现在有很多代码格式化工具.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-2&quot;&gt;字符拼接&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;p&gt;
+这种比上一种略麻烦, 因为这种代码肉眼一般很难分辨, 一堆 &lt;code&gt;eval&lt;/code&gt; 和 &lt;code&gt;charCodeAt&lt;/code&gt; 之
+类的东西&amp;#x2026; 不过这也没什么难的, 用 js 解释器执行代码即可得到结果.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-3&quot;&gt;变量名混淆&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;p&gt;
+这种是最麻烦的情况, 变量名完全被打乱, 字符串也被 unicode 编码和 ascii 编码代替,
+肉眼根本无法识别. 现在暂时的解决方案几乎只有人肉.(有好的方法请告诉我!
+&lt;/p&gt;
+
+
+&lt;p&gt;
+通常, 混淆工具会基于这三种方法扩展出更加复杂的混淆, 不过, 万变不离其宗.这次,
+Emacs 不会让我失望, 对于以上三种情况, 我会用 Emacs 一一给出解法. 不过在这之前, 我
+先介绍一下几个 Emacs 插件.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;a href=&quot;http:elpa.gnu.org/packages/js2-mode.html&quot;&gt;js2-mode&lt;/a&gt;, 足以匹敌 ide 的模式, 和一般编辑器的做法不同, 它提供 ast 访问, 而不是简
+单的正则匹配, 比其他编辑器不知强大多少倍. 具体 feature 见链接. 同时, 推荐一个与之
+配套的工具 &lt;a href=&quot;https:github.com/magnars/js2-refactor.el&quot;&gt;js2-refactor&lt;/a&gt;, 提供一些 js 重构相关的功能.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;a href=&quot;https:github.com/yasuyk/web-beautify&quot;&gt;web-beautify&lt;/a&gt;, js, html, json 格式化工具. 
+&lt;/p&gt;
+
+&lt;p&gt;
+好了, 工具介绍完了, 进入正题. 前两种加密方式直接可以用 &lt;b&gt;web-beautify&lt;/b&gt; 解决. 现在
+我着重介绍第三种情况的解法. 请看下面代码:
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-javascript&quot;&gt;&lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;_0x8ebf&lt;/span&gt;=[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\x53\x61\x79\x48\x65\x6C\x6C\x6F&quot;&lt;/span&gt;,&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\x47\x65\x74\x43\x6F\x75\x6E\x74&quot;&lt;/span&gt;,&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\u6D4B\u8BD5\x4D\x65\x73\x73\x61\x67\x65\x20\x3A\x20&quot;&lt;/span&gt;,&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\x59\x6F\x75\x20\x61\x72\x65\x20\x77\x65\x6C\x63\x6F\x6D\x65\x2E&quot;&lt;/span&gt;]&amp;#57344;&amp;#57345;
+&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;_0x8ec0&lt;/span&gt;(&lt;span style=&quot;color: #eedd82;&quot;&gt;_0xbd81x2&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+{&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;_0xbd81x3&lt;/span&gt;=0;&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #7fffd4;&quot;&gt;this&lt;/span&gt;[_0x8ebf[0]]=&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; (&lt;span style=&quot;color: #eedd82;&quot;&gt;_0xbd81x4&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+        {&amp;#57344;&amp;#57345;&amp;#57345;
+                _0xbd81x3++;&amp;#57344;&amp;#57345;&amp;#57345;
+                alert(_0xbd81x2+_0xbd81x4);&amp;#57344;&amp;#57345;&amp;#57345;
+        }&amp;#57344;&amp;#57345;&amp;#57345;
+        ;&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #7fffd4;&quot;&gt;this&lt;/span&gt;[_0x8ebf[1]]=&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; ()&amp;#57344;&amp;#57345;&amp;#57345;
+        {&amp;#57344;&amp;#57345;&amp;#57345;
+                &lt;span style=&quot;color: #00ffff;&quot;&gt;return&lt;/span&gt; _0xbd81x3;&amp;#57344;&amp;#57345;&amp;#57345;
+        }&amp;#57344;&amp;#57345;&amp;#57345;
+        ;&amp;#57344;&amp;#57345;&amp;#57345;
+}&amp;#57344;&amp;#57345;&amp;#57345;
+;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;_0x8ec1&lt;/span&gt;= &lt;span style=&quot;color: #00ffff;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #98fb98;&quot;&gt;_0x8ec0&lt;/span&gt;(_0x8ebf[2]);&amp;#57344;&amp;#57345;&amp;#57345;
+_0x8ec1[_0x8ebf[0]](_0x8ebf[3]);&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+这种情况粗看是无法知道这段代码的意义的. 所以, 现在祭出 Emacs, 让它来解决. 第一步,
+解码字符串. 
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;script src=&quot;https://gist.github.com/ifree/55bc4c877cc09f44d0f5.js&quot;&gt;&lt;/script&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+结果
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-javascript&quot;&gt;&lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;_0x8ebf&lt;/span&gt;=[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;SayHello&quot;&lt;/span&gt;,&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;GetCount&quot;&lt;/span&gt;,&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&amp;#27979;&amp;#35797; : &quot;&lt;/span&gt;,&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;You are welcome.&quot;&lt;/span&gt;]&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #ff4500;&quot;&gt;//&lt;/span&gt;&lt;span style=&quot;color: #ff4500;&quot;&gt;rest content....&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+第二步, remap 数组里的字符串到实际变量.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;script src=&quot;https://gist.github.com/ifree/dd6a94b3a369a4b07ba6.js&quot;&gt;&lt;/script&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;script src=&quot;https://gist.github.com/ifree/eb034ef34f5aa957e897.js&quot;&gt;&lt;/script&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+结果
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-javascript&quot;&gt;&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;_0x8ec0&lt;/span&gt;(&lt;span style=&quot;color: #eedd82;&quot;&gt;_0xbd81x2&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+{&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;_0xbd81x3&lt;/span&gt;=0;&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #7fffd4;&quot;&gt;this&lt;/span&gt;[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;SayHello&quot;&lt;/span&gt;]=&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; (&lt;span style=&quot;color: #eedd82;&quot;&gt;_0xbd81x4&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+        {&amp;#57344;&amp;#57345;&amp;#57345;
+                _0xbd81x3++;&amp;#57344;&amp;#57345;&amp;#57345;
+                alert(_0xbd81x2+_0xbd81x4);&amp;#57344;&amp;#57345;&amp;#57345;
+        }&amp;#57344;&amp;#57345;&amp;#57345;
+        ;&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #7fffd4;&quot;&gt;this&lt;/span&gt;[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;GetCount&quot;&lt;/span&gt;]=&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; ()&amp;#57344;&amp;#57345;&amp;#57345;
+        {&amp;#57344;&amp;#57345;&amp;#57345;
+                &lt;span style=&quot;color: #00ffff;&quot;&gt;return&lt;/span&gt; _0xbd81x3;&amp;#57344;&amp;#57345;&amp;#57345;
+        }&amp;#57344;&amp;#57345;&amp;#57345;
+        ;&amp;#57344;&amp;#57345;&amp;#57345;
+}&amp;#57344;&amp;#57345;&amp;#57345;
+;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;_0x8ec1&lt;/span&gt;= &lt;span style=&quot;color: #00ffff;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #98fb98;&quot;&gt;_0x8ec0&lt;/span&gt;(&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&amp;#27979;&amp;#35797; : &quot;&lt;/span&gt;);&amp;#57344;&amp;#57345;&amp;#57345;
+_0x8ec1[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;SayHello&quot;&lt;/span&gt;](&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;You are welcome.&quot;&lt;/span&gt;);&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+到此, 已经可以大概得出这段 js 的意义, 剩下的把无意义的变量名根据上下文改正(体
+力活&amp;#x2026;.)
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;script src=&quot;https://gist.github.com/ifree/01d80f178e3d877efde7.js&quot;&gt;&lt;/script&gt;
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+
+&lt;pre class=&quot;src src-javascript&quot;&gt;&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; &lt;span style=&quot;color: #87cefa;&quot;&gt;Greeter&lt;/span&gt;(&lt;span style=&quot;color: #eedd82;&quot;&gt;who&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+{&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;count&lt;/span&gt;=0;&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #7fffd4;&quot;&gt;this&lt;/span&gt;[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;SayHello&quot;&lt;/span&gt;]=&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; (&lt;span style=&quot;color: #eedd82;&quot;&gt;content&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+        {&amp;#57344;&amp;#57345;&amp;#57345;
+                count++;&amp;#57344;&amp;#57345;&amp;#57345;
+                alert(who+content);&amp;#57344;&amp;#57345;&amp;#57345;
+        }&amp;#57344;&amp;#57345;&amp;#57345;
+        ;&amp;#57344;&amp;#57345;&amp;#57345;
+        &lt;span style=&quot;color: #7fffd4;&quot;&gt;this&lt;/span&gt;[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;GetCount&quot;&lt;/span&gt;]=&lt;span style=&quot;color: #00ffff;&quot;&gt;function&lt;/span&gt; ()&amp;#57344;&amp;#57345;&amp;#57345;
+        {&amp;#57344;&amp;#57345;&amp;#57345;
+                &lt;span style=&quot;color: #00ffff;&quot;&gt;return&lt;/span&gt; count;&amp;#57344;&amp;#57345;&amp;#57345;
+        }&amp;#57344;&amp;#57345;&amp;#57345;
+        ;&amp;#57344;&amp;#57345;&amp;#57345;
+}&amp;#57344;&amp;#57345;&amp;#57345;
+;&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;span style=&quot;color: #00ffff;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #eedd82;&quot;&gt;greeter&lt;/span&gt;= &lt;span style=&quot;color: #00ffff;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #98fb98;&quot;&gt;Greeter&lt;/span&gt;(&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&amp;#27979;&amp;#35797; : &quot;&lt;/span&gt;);&amp;#57344;&amp;#57345;&amp;#57345;
+greeter[&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;SayHello&quot;&lt;/span&gt;](&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;You are welcome.&quot;&lt;/span&gt;);&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+大功告成!
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs&quot;&gt;deobfuscate javascript with emacs&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on June 28, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
@@ -41,12 +237,12 @@ doubanfm 网站上做一些交互(跳过, 喜欢之类的). 这样我在遇到�
 &lt;/p&gt;
 
 &lt;p&gt;
-这完全是写着玩的, 大概介绍一下. 项目地址: &lt;a href=&quot;https://github.com/ifree/douban-ff.git&quot;&gt;https://github.com/ifree/douban-ff.git&lt;/a&gt;
+这完全是写着玩的, 大概介绍一下. 项目地址: &lt;a href=&quot;https:github.com/ifree/douban-ff.git&quot;&gt;https:github.com/ifree/douban-ff.git&lt;/a&gt;
 &lt;!-- break --&gt;  
 &lt;/p&gt;
 
 &lt;p&gt;
-你可能想知道 emacs 是如何与 firefox 交互的吧. 我用了一个插件 &lt;a href=&quot;https://github.com/bard/mozrepl&quot;&gt;moz-repl&lt;/a&gt;, 其内部会创
+你可能想知道 emacs 是如何与 firefox 交互的吧. 我用了一个插件 &lt;a href=&quot;https:github.com/bard/mozrepl&quot;&gt;moz-repl&lt;/a&gt;, 其内部会创
 建一个 &lt;code&gt;server_socket&lt;/code&gt; 对象来处理请求, 把接收到的请求作为 js 脚本执行, 所以
 emacs 只需要向它发送 js 脚本就可以完成执行操作. moz-repl 其实也是一个 ff 插件开发
 利器. 再贴一点具体实现的代码, 如下:
@@ -126,7 +322,7 @@ script url-regex&amp;#57344;&amp;#57345;&amp;#57345;
     <uri>http://programming4fun.com</uri>
   </author>
   <content type="html">&lt;p&gt;
-最近给项目集成了 &lt;a href=&quot;https://code.google.com/p/google-breakpad&quot;&gt;breakpad&lt;/a&gt;, 一款开源 crash report 系统. 对 crash 捕获, dump 数据生
+最近给项目集成了 &lt;a href=&quot;https:code.google.com/p/google-breakpad&quot;&gt;breakpad&lt;/a&gt;, 一款开源 crash report 系统. 对 crash 捕获, dump 数据生
 成, dump 文件分析, 还有 dump 文件上传,都有很好的支持. 据我所知, firefox,
 chromium 等项目都集成了它. 从官方文档上看, 此项目对 linux 的支持也只是有限,
 android 的话就更有限了. 不过即便是有限的支持, 对于我们的项目来说已经足够了. 现在
@@ -157,7 +353,6 @@ dump 文件.  &lt;code&gt;minidump_stackwalk&lt;/code&gt; 能结合程序的 sym
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-
 &lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-2&quot;&gt;集成过程&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
@@ -167,7 +362,7 @@ andoird 下直接运行 &lt;code&gt;minidump_stackwalk&lt;/code&gt;. 由于我�
 有链接部分 breakpad 的库且编译选项有冲突, 再加上我们项目的内存管理方式等因素, 让
 我放弃了集成 breakpad 代码到项目中的想法. 于是我就又交叉编译了
 &lt;code&gt;minidump_stackwalk&lt;/code&gt;. 项目已经开源, 地址:
-&lt;a href=&quot;https://github.com/ifree/Breakpad-android&quot;&gt;https://github.com/ifree/Breakpad-android&lt;/a&gt; .
+&lt;a href=&quot;https:github.com/ifree/Breakpad-android&quot;&gt;https:github.com/ifree/Breakpad-android&lt;/a&gt; .
 &lt;/p&gt;
 
 &lt;p&gt;
@@ -191,6 +386,7 @@ java 执行 &lt;code&gt;minidump_stackwalk&lt;/code&gt; , 并读取输出流.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-2-2&quot; class=&quot;outline-3&quot;&gt;
 &lt;h3 id=&quot;sec-2-2&quot;&gt;集成代码&lt;/h3&gt;
 &lt;div class=&quot;outline-text-3&quot; id=&quot;text-2-2&quot;&gt;
@@ -204,39 +400,6 @@ getBacktrace(String dumpFile,String symbolPath);&lt;/code&gt;, 本地主要实�
 &lt;pre class=&quot;src src-sh&quot;&gt;ls ~/Dev/projects/Breakpad-android/jni&amp;#57344;&amp;#57345;&amp;#57345;
 &lt;/pre&gt;
 &lt;/div&gt;
-
-&lt;table border=&quot;2&quot; cellspacing=&quot;0&quot; cellpadding=&quot;6&quot; rules=&quot;groups&quot; frame=&quot;hsides&quot;&gt;
-
-
-&lt;colgroup&gt;
-&lt;col  class=&quot;left&quot; /&gt;
-&lt;/colgroup&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;Android.mk&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;Application.mk&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;BreakpadAgent.cpp&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;BreakpadHelper.cpp&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;BreakpadHelper.h&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;minidump&lt;sub&gt;stackwalk&lt;/sub&gt;.cc&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
 
 &lt;p&gt;
 你可能需要注意这些东西:
@@ -258,6 +421,7 @@ handler 为空的话, 会尝试读取 sd 卡上的 symbol 文件, 在 BreakpadAg
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-3&quot;&gt;遇到的坑&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
@@ -282,6 +446,7 @@ android 创建进程时, 如果进程有大量的输出流发送到 &lt;code&gt;
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-4&quot;&gt;总结&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
@@ -309,7 +474,7 @@ android 创建进程时, 如果进程有大量的输出流发送到 &lt;code&gt;
   <content type="html">&lt;p&gt;
 大家都知道 flash player 在 *nix 平台上的表现有多糟, 一打开 douban fm 风扇就开始狂
 转, 这阵势就像要把我 CPU 献祭一样, 我是不能容忍它的. 于是, 我造了这个轮子&amp;#x2013; 写了
-dobanfm 的 html5 版. &lt;a href=&quot;https://github.com/ifree/doubanfm-html5&quot;&gt;项目地址&lt;/a&gt;, &lt;a href=&quot;http://userscripts.org/scripts/show/292624&quot;&gt;userscript&lt;/a&gt; . 下面是我这个业余 js 开发人员的一些开
+dobanfm 的 html5 版. &lt;a href=&quot;https:github.com/ifree/doubanfm-html5&quot;&gt;项目地址&lt;/a&gt;, &lt;a href=&quot;http:userscripts.org/scripts/show/292624&quot;&gt;userscript&lt;/a&gt; . 下面是我这个业余 js 开发人员的一些开
 发记录. &lt;!-- break --&gt;
 &lt;/p&gt;
 
@@ -326,28 +491,29 @@ dobanfm 的 html5 版. &lt;a href=&quot;https://github.com/ifree/doubanfm-html5&
 &lt;h3 id=&quot;sec-1-1&quot;&gt;major-mode&lt;/h3&gt;
 &lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-1&quot;&gt;
 &lt;/div&gt;&lt;div id=&quot;outline-container-sec-1-1-1&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-1-1&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Js2Mode&quot;&gt;js2-mode&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-1-1&quot;&gt;&lt;a href=&quot;http:www.emacswiki.org/emacs/Js2Mode&quot;&gt;js2-mode&lt;/a&gt;&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-1&quot;&gt;
 &lt;p&gt;
 emacs 自带了 javascript-mode , 这个模式提供了主要的语法高亮和基本的缩进. 用来看代
 码是足够了. 如果想更畅快的编辑写代码, 推荐使用 js2-mode . 它可是算是最好的
-javascript 模式了. js 1.5 - 1.8 都支持, 而且支持 &lt;a href=&quot;http://en.wikipedia.org/wiki/ECMAScript_for_XML&quot;&gt;e4x&lt;/a&gt; , 代码折叠, 也有更智能的缩
+javascript 模式了. js 1.5 - 1.8 都支持, 而且支持 &lt;a href=&quot;http:en.wikipedia.org/wiki/ECMAScript_for_XML&quot;&gt;e4x&lt;/a&gt; , 代码折叠, 也有更智能的缩
 进. 还有很多 feature 没有介绍, 就留给你来发掘了. 
 &lt;/p&gt;
 
 &lt;p&gt;
-如果你是 &lt;a href=&quot;https://npmjs.org/&quot;&gt;npm&lt;/a&gt; 开发者的话, 可以考虑 &lt;a href=&quot;https://github.com/thomblake/js3-mode&quot;&gt;js3-mode&lt;/a&gt; , 兼容 js2-mode, 同时提供 &lt;a href=&quot;https://github.com/npm/npm/blob/master/doc/misc/npm-coding-style.md&quot;&gt;npm-styl&lt;/a&gt;e 支
+如果你是 &lt;a href=&quot;https:npmjs.org/&quot;&gt;npm&lt;/a&gt; 开发者的话, 可以考虑 &lt;a href=&quot;https:github.com/thomblake/js3-mode&quot;&gt;js3-mode&lt;/a&gt; , 兼容 js2-mode, 同时提供 &lt;a href=&quot;https:github.com/npm/npm/blob/master/doc/misc/npm-coding-style.md&quot;&gt;npm-styl&lt;/a&gt;e 支
 持. npm-style 看起来确实不错, 但是我不是专职的 js 开发人员, 所以还是照
-&lt;a href=&quot;http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml&quot;&gt;google-js-style&lt;/a&gt; 来吧.
+&lt;a href=&quot;http:google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml&quot;&gt;google-js-style&lt;/a&gt; 来吧.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-2&quot; class=&quot;outline-3&quot;&gt;
 &lt;h3 id=&quot;sec-1-2&quot;&gt;minor-mode&lt;/h3&gt;
 &lt;div class=&quot;outline-text-3&quot; id=&quot;text-1-2&quot;&gt;
 &lt;/div&gt;&lt;div id=&quot;outline-container-sec-1-2-1&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-2-1&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Yasnippet&quot;&gt;yasnippets&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-2-1&quot;&gt;&lt;a href=&quot;http:www.emacswiki.org/emacs/Yasnippet&quot;&gt;yasnippets&lt;/a&gt;&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-1&quot;&gt;
 &lt;p&gt;
 主流的 IDE 都会有代码段自动补全功能, emacs 自然不会落下. yasnippets 就是emacs 下
@@ -355,29 +521,32 @@ javascript 模式了. js 1.5 - 1.8 都支持, 而且支持 &lt;a href=&quot;http
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-2-2&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-2-2&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Flycheck&quot;&gt;flycheck&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-2-2&quot;&gt;&lt;a href=&quot;http:www.emacswiki.org/emacs/Flycheck&quot;&gt;flycheck&lt;/a&gt;&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-2&quot;&gt;
 &lt;p&gt;
 这是 emacs 上取代 flymake 的一个实时代码检查工具 (check your code on the fly). 配
-合 &lt;a href=&quot;http://en.wikipedia.org/wiki/JSLint&quot;&gt;jslint&lt;/a&gt; 可以随时让我知道那里的代码有问题, 减少调试时间. jslint 是 js 开发者必不
-可少的代码规范检查工具, 大家使用 jslint 一般可能会用 make file (现在一般用 &lt;a href=&quot;http://gruntjs.com/&quot;&gt;Grunt&lt;/a&gt;) 定义一个 lint 的
+合 &lt;a href=&quot;http:en.wikipedia.org/wiki/JSLint&quot;&gt;jslint&lt;/a&gt; 可以随时让我知道那里的代码有问题, 减少调试时间. jslint 是 js 开发者必不
+可少的代码规范检查工具, 大家使用 jslint 一般可能会用 make file (现在一般用 &lt;a href=&quot;http:gruntjs.com/&quot;&gt;Grunt&lt;/a&gt;) 定义一个 lint 的
 target, 这个属于 post checking. flycheck 则可以让你做到 realtime checking, 多爽!
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-2-3&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-2-3&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/Projectile&quot;&gt;projectile&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-2-3&quot;&gt;&lt;a href=&quot;http:www.emacswiki.org/emacs/Projectile&quot;&gt;projectile&lt;/a&gt;&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-3&quot;&gt;
 &lt;p&gt;
 作为一个轻量的项目文件管理工具, projectile 是我最喜欢用的. 没有第三方依赖, 提供大
 部分项目文件管理功能: 浏览, 快速查找, 最近使用文件列表, 文件跳转, 项目切换, 项目
-tags 文件生成,等. 如果你的需求更加复杂, 请移步 &lt;a href=&quot;http://www.emacswiki.org/emacs/EmacsCodeBrowser&quot;&gt;ECB&lt;/a&gt;.
+tags 文件生成,等. 如果你的需求更加复杂, 请移步 &lt;a href=&quot;http:www.emacswiki.org/emacs/EmacsCodeBrowser&quot;&gt;ECB&lt;/a&gt;.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-2-4&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-2-4&quot;&gt;&lt;a href=&quot;http://www.emacswiki.org/emacs/AutoComplete&quot;&gt;AutoComplete&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-2-4&quot;&gt;&lt;a href=&quot;http:www.emacswiki.org/emacs/AutoComplete&quot;&gt;AutoComplete&lt;/a&gt;&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-4&quot;&gt;
 &lt;p&gt;
 自动补全功能是现代 IDE 的一大杀器, 通过静态分析, 语法树解析, tags等手段来补全代码
@@ -386,45 +555,49 @@ tags 文件生成,等. 如果你的需求更加复杂, 请移步 &lt;a href=&quo
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-2-5&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;sec-1-2-5&quot;&gt;&lt;a href=&quot;https://github.com/skeeto/skewer-mode&quot;&gt;skewer&lt;/a&gt;&lt;/h4&gt;
+&lt;h4 id=&quot;sec-1-2-5&quot;&gt;&lt;a href=&quot;https:github.com/skeeto/skewer-mode&quot;&gt;skewer&lt;/a&gt;&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-2-5&quot;&gt;
 &lt;p&gt;
 最后献上必杀技 skewer-mode , 它简直就是为 javascript 快速开发的而生的. 真是即写即
-所得. 它通过 &lt;a href=&quot;https://github.com/skeeto/emacs-http-server&quot;&gt;simple-httpd&lt;/a&gt; 做后端并使用 &lt;a href=&quot;http://en.wikipedia.org/wiki/Comet_%2528programming%2529&quot;&gt;comet&lt;/a&gt; 技术来进行 http 长连接实现推送
+所得. 它通过 &lt;a href=&quot;https:github.com/skeeto/emacs-http-server&quot;&gt;simple-httpd&lt;/a&gt; 做后端并使用 &lt;a href=&quot;http:en.wikipedia.org/wiki/Comet_%2528programming%2529&quot;&gt;comet&lt;/a&gt; 技术来进行 http 长连接实现推送
 代码到浏览器并获得执行结果. 所以, 你在写代码的时候可以立即验证自己的代码. 想了解
-更多 comet 可以看看我以前翻译的&lt;a href=&quot;http://ifree.is-programmer.com/2010/11/2/websockets_everywhere_with_socket-io.22344.html&quot;&gt;文章&lt;/a&gt; 
+更多 comet 可以看看我以前翻译的&lt;a href=&quot;http:ifree.is-programmer.com/2010/11/2/websockets_everywhere_with_socket-io.22344.html&quot;&gt;文章&lt;/a&gt; 
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-2&quot;&gt;js 代码风格,注意事项&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
 &lt;p&gt;
 一般我的代码会通过 flycheck 和 jslint 配合, 所以风格应该不会有太大的问题. 现在说
-说 jslint 吧. 就像c &lt;a href=&quot;http://en.wikipedia.org/wiki/Lint_%2528software%2529&quot;&gt;lint&lt;/a&gt; 一样这是一种代码风格检查工具. 它会发现你代码的潜在漏洞,
+说 jslint 吧. 就像c &lt;a href=&quot;http:en.wikipedia.org/wiki/Lint_%2528software%2529&quot;&gt;lint&lt;/a&gt; 一样这是一种代码风格检查工具. 它会发现你代码的潜在漏洞,
 让你不至于写出太多漏洞的代码. 不过需要提到的是, lint 虽好, 自己没有写好代码的意识
-的话, 没用. jslint 的规则主要参照&lt;a href=&quot;http://javascript.crockford.com/code.html&quot;&gt;这里&lt;/a&gt; 的代码约定. 可能有时候你可能觉得它太严格了.
-没问题, 你可以让它容忍一些代码风格. 其他的介绍看&lt;a href=&quot;http://www.jslint.com/lint.html&quot;&gt;这里&lt;/a&gt; . 
+的话, 没用. jslint 的规则主要参照&lt;a href=&quot;http:javascript.crockford.com/code.html&quot;&gt;这里&lt;/a&gt; 的代码约定. 可能有时候你可能觉得它太严格了.
+没问题, 你可以让它容忍一些代码风格. 其他的介绍看&lt;a href=&quot;http:www.jslint.com/lint.html&quot;&gt;这里&lt;/a&gt; . 
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-3&quot;&gt;svg 相关&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
 &lt;p&gt;
-从源码看你知道 UI 部分是用 &lt;a href=&quot;http://en.wikipedia.org/wiki/Scalable_Vector_Graphics&quot;&gt;svg&lt;/a&gt; 画的, 作为一个 web UI 门外汉来说, svg/&lt;a href=&quot;http://en.wikipedia.org/wiki/Vector_Markup_Language&quot;&gt;vml&lt;/a&gt; 无疑解救
+从源码看你知道 UI 部分是用 &lt;a href=&quot;http:en.wikipedia.org/wiki/Scalable_Vector_Graphics&quot;&gt;svg&lt;/a&gt; 画的, 作为一个 web UI 门外汉来说, svg/&lt;a href=&quot;http:en.wikipedia.org/wiki/Vector_Markup_Language&quot;&gt;vml&lt;/a&gt; 无疑解救
 了我. 以前我还用 IE 的时候知道了 vml , 对这种不用关心各种怪异的 css/js bug,直接用
 xml 来描述的语言真是很向往,进而流连于各种 vml webart 中.后来 vml 过时了,哈哈. 取
 而代之的是 svg, webkit 系, netscape 系的都有很好的支持, 所以大概了解了一下. 你可
 以把他们看作是一种图形描述语言. 因为可以描述, 所以无论怎么缩放图像质量也不会变差.
-我通过 &lt;a href=&quot;http://en.wikipedia.org/wiki/Inkscape&quot;&gt;inkspace&lt;/a&gt; 照这 doubamfm 拖了个大概, 然后用 javascript 访问其 dom, 很像
+我通过 &lt;a href=&quot;http:en.wikipedia.org/wiki/Inkscape&quot;&gt;inkspace&lt;/a&gt; 照这 doubamfm 拖了个大概, 然后用 javascript 访问其 dom, 很像
 html 的 dom, 所以代码写起来也不是很麻烦. 
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-4&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-4&quot;&gt;总结&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-4&quot;&gt;
@@ -481,7 +654,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 &lt;p&gt;
 现在我介绍一些 org-mode 的基础知识,以便你能快速入门, 想要更深入的了解,
-多看看&lt;a href=&quot;http://orgmode.org/#docs&quot;&gt;文档&lt;/a&gt;吧, org-mode 的文档还是比较丰富的.  
+多看看&lt;a href=&quot;http:orgmode.org/#docs&quot;&gt;文档&lt;/a&gt;吧, org-mode 的文档还是比较丰富的.  
 &lt;/p&gt;
 &lt;/div&gt;
 
@@ -544,6 +717,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-1-2&quot; class=&quot;outline-4&quot;&gt;
 &lt;h4 id=&quot;sec-1-1-2&quot;&gt;移动&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-2&quot;&gt;
@@ -590,6 +764,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-1-1-3&quot; class=&quot;outline-4&quot;&gt;
 &lt;h4 id=&quot;sec-1-1-3&quot;&gt;&lt;code&gt;TODO&lt;/code&gt; 相关&lt;/h4&gt;
 &lt;div class=&quot;outline-text-4&quot; id=&quot;text-1-1-3&quot;&gt;
@@ -633,6 +808,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-2&quot;&gt;用 org-mode 来做 GTD&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
@@ -644,7 +820,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 &lt;div class=&quot;org-src-container&quot;&gt;
 
-&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(directory-files &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/Projects/org/plan&quot;&lt;/span&gt; t &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\.org$&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
+&lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(directory-files &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/org/plan&quot;&lt;/span&gt; t &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\.org$&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
 &lt;/pre&gt;
 &lt;/div&gt;
 
@@ -664,11 +840,11 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/colgroup&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/dev.org&lt;/td&gt;
-&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/math.org&lt;/td&gt;
-&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/personal.org&lt;/td&gt;
-&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/reading.org&lt;/td&gt;
-&lt;td class=&quot;left&quot;&gt;/Users/ifree/Dev/Projects/org/plan/today.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/home/ifree/Dev/org/plan/dev.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/home/ifree/Dev/org/plan/math.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/home/ifree/Dev/org/plan/personal.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/home/ifree/Dev/org/plan/reading.org&lt;/td&gt;
+&lt;td class=&quot;left&quot;&gt;/home/ifree/Dev/org/plan/today.org&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -739,10 +915,10 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;pre class=&quot;src src-emacs-lisp&quot;&gt;(setq org-agenda-custom-commands&amp;#57344;&amp;#57345;&amp;#57345;
       &#39;((&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;c&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;things I should today&quot;&lt;/span&gt; alltodo &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
          ((org-agenda-overriding-header &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;Hey man, you need finish these today!&quot;&lt;/span&gt;)&amp;#57345;
-          (org-agenda-files &#39;(&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/Projects/org/plan/today.org&quot;&lt;/span&gt;))))&amp;#57344;&amp;#57345;&amp;#57345;
+          (org-agenda-files &#39;(&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/org/plan/today.org&quot;&lt;/span&gt;))))&amp;#57344;&amp;#57345;&amp;#57345;
         (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;p&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;pending todo&quot;&lt;/span&gt; todo &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;WAITING|SOMEDAY&quot;&lt;/span&gt;)&amp;#57344;&amp;#57345;&amp;#57345;
         (&lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;view archieved task&quot;&lt;/span&gt; todo &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;CANCELLED|DELEGATED|DONE&quot;&lt;/span&gt;&amp;#57344;&amp;#57345;&amp;#57345;
-         ((org-agenda-files (directory-files-rec &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/Projects/org&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\.archive$&quot;&lt;/span&gt;))))))&amp;#57344;&amp;#57345;
+         ((org-agenda-files (directory-files-rec &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;~/Dev/org&quot;&lt;/span&gt; &lt;span style=&quot;color: #ffa07a;&quot;&gt;&quot;\.archive$&quot;&lt;/span&gt;))))))&amp;#57344;&amp;#57345;&amp;#57345;
 &lt;/pre&gt;
 &lt;/div&gt;
 
@@ -786,13 +962,13 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 &lt;ul class=&quot;org-ul&quot;&gt;
 &lt;li&gt;checkboxes
-  &lt;code&gt;M-S-&amp;lt;RET&amp;gt;&lt;/code&gt; 插入 checkbox
+&lt;code&gt;M-S-&amp;lt;RET&amp;gt;&lt;/code&gt; 插入 checkbox
 &lt;/li&gt;
 &lt;li&gt;archive 
-  &lt;code&gt;C-c C-x C-s&lt;/code&gt; 存档当前条目
+&lt;code&gt;C-c C-x C-s&lt;/code&gt; 存档当前条目
 &lt;/li&gt;
 &lt;li&gt;agenda view
-  &lt;code&gt;M-x org-agenda&lt;/code&gt; 一般绑定键位为 &lt;code&gt;C-a a&lt;/code&gt;
+&lt;code&gt;M-x org-agenda&lt;/code&gt; 一般绑定键位为 &lt;code&gt;C-a a&lt;/code&gt;
 &lt;/li&gt;
 &lt;li&gt;priorities
 每个 TODO 都可以设置优先级 快捷键 &lt;code&gt;S-&amp;lt;UP&amp;gt;&lt;/code&gt; &lt;code&gt;S-&amp;lt;DOWN&amp;gt;&lt;/code&gt;
@@ -808,6 +984,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+
 &lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
 &lt;h2 id=&quot;sec-3&quot;&gt;后记&lt;/h2&gt;
 &lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
@@ -837,8 +1014,8 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
     <uri>http://programming4fun.com</uri>
   </author>
   <content type="html">&lt;p&gt;
-在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 &lt;a href=&quot;http://ifree.is-programmer.com&quot;&gt;is-programmer&lt;/a&gt;,
-&lt;a href=&quot;http://ifree.cnblogs.com/&quot;&gt;cnblogs&lt;/a&gt;, 但是最后统统烂尾. 中断博客的原因是因为我觉得自己胸无点墨, 写作
+在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 &lt;a href=&quot;http:ifree.is-programmer.com&quot;&gt;is-programmer&lt;/a&gt;,
+&lt;a href=&quot;http:ifree.cnblogs.com/&quot;&gt;cnblogs&lt;/a&gt;, 但是最后统统烂尾. 中断博客的原因是因为我觉得自己胸无点墨, 写作
 技能又笨拙, 继续写下去很丢面子. 进而选择了本地博客,本地 wiki 来做笔记,
 记录思想. 可是在一次意外中, 由于我的疏忽, 丢失了硬盘的所有资料. 我开始
 尝试一些云端解决方案, 比如 dropbox, evernote, gdrive, 加上这两年痴迷于
@@ -848,7 +1025,7 @@ emacs, 所以我用 emacs 的 org-mode 来做日常的记录, 通过 dropbox 同
 &lt;/p&gt;
 
 &lt;p&gt;
-本博客是基于 jekyll 静态博客, 使用 &lt;a href=&quot;https://github.com/ColeTownsend/Balzac-for-Jekyll&quot;&gt;BALZAC&lt;/a&gt; theme 并做了一些小修改. 博
+本博客是基于 jekyll 静态博客, 使用 &lt;a href=&quot;https:github.com/ColeTownsend/Balzac-for-Jekyll&quot;&gt;BALZAC&lt;/a&gt; theme 并做了一些小修改. 博
 客内容主要是游戏编程,c/c++ , unix like system, emacs 和函数式编程相关的
 内容. 
 &lt;/p&gt;

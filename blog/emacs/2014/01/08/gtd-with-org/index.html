@@ -110,7 +110,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <p>
 现在我介绍一些 org-mode 的基础知识,以便你能快速入门, 想要更深入的了解,
-多看看<a href="http://orgmode.org/#docs">文档</a>吧, org-mode 的文档还是比较丰富的.  
+多看看<a href="http:orgmode.org/#docs">文档</a>吧, org-mode 的文档还是比较丰富的.  
 </p>
 </div>
 
@@ -173,6 +173,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </table>
 </div>
 </div>
+
 <div id="outline-container-sec-1-1-2" class="outline-4">
 <h4 id="sec-1-1-2">移动</h4>
 <div class="outline-text-4" id="text-1-1-2">
@@ -219,6 +220,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </table>
 </div>
 </div>
+
 <div id="outline-container-sec-1-1-3" class="outline-4">
 <h4 id="sec-1-1-3"><code>TODO</code> 相关</h4>
 <div class="outline-text-4" id="text-1-1-3">
@@ -262,6 +264,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2">用 org-mode 来做 GTD</h2>
 <div class="outline-text-2" id="text-2">
@@ -273,7 +276,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(directory-files <span style="color: #ffa07a;">"~/Dev/Projects/org/plan"</span> t <span style="color: #ffa07a;">"\.org$"</span>)&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp">(directory-files <span style="color: #ffa07a;">"~/Dev/org/plan"</span> t <span style="color: #ffa07a;">"\.org$"</span>)&#57344;&#57345;&#57345;
 </pre>
 </div>
 
@@ -293,11 +296,11 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </colgroup>
 <tbody>
 <tr>
-<td class="left">/Users/ifree/Dev/Projects/org/plan/dev.org</td>
-<td class="left">/Users/ifree/Dev/Projects/org/plan/math.org</td>
-<td class="left">/Users/ifree/Dev/Projects/org/plan/personal.org</td>
-<td class="left">/Users/ifree/Dev/Projects/org/plan/reading.org</td>
-<td class="left">/Users/ifree/Dev/Projects/org/plan/today.org</td>
+<td class="left">/home/ifree/Dev/org/plan/dev.org</td>
+<td class="left">/home/ifree/Dev/org/plan/math.org</td>
+<td class="left">/home/ifree/Dev/org/plan/personal.org</td>
+<td class="left">/home/ifree/Dev/org/plan/reading.org</td>
+<td class="left">/home/ifree/Dev/org/plan/today.org</td>
 </tr>
 </tbody>
 </table>
@@ -368,10 +371,10 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 <pre class="src src-emacs-lisp">(setq org-agenda-custom-commands&#57344;&#57345;&#57345;
       '((<span style="color: #ffa07a;">"c"</span> <span style="color: #ffa07a;">"things I should today"</span> alltodo <span style="color: #ffa07a;">""</span>&#57344;&#57345;&#57345;
          ((org-agenda-overriding-header <span style="color: #ffa07a;">"Hey man, you need finish these today!"</span>)&#57345;
-          (org-agenda-files '(<span style="color: #ffa07a;">"~/Dev/Projects/org/plan/today.org"</span>))))&#57344;&#57345;&#57345;
+          (org-agenda-files '(<span style="color: #ffa07a;">"~/Dev/org/plan/today.org"</span>))))&#57344;&#57345;&#57345;
         (<span style="color: #ffa07a;">"p"</span> <span style="color: #ffa07a;">"pending todo"</span> todo <span style="color: #ffa07a;">"WAITING|SOMEDAY"</span>)&#57344;&#57345;&#57345;
         (<span style="color: #ffa07a;">"A"</span> <span style="color: #ffa07a;">"view archieved task"</span> todo <span style="color: #ffa07a;">"CANCELLED|DELEGATED|DONE"</span>&#57344;&#57345;&#57345;
-         ((org-agenda-files (directory-files-rec <span style="color: #ffa07a;">"~/Dev/Projects/org"</span> <span style="color: #ffa07a;">"\.archive$"</span>))))))&#57344;&#57345;
+         ((org-agenda-files (directory-files-rec <span style="color: #ffa07a;">"~/Dev/org"</span> <span style="color: #ffa07a;">"\.archive$"</span>))))))&#57344;&#57345;&#57345;
 </pre>
 </div>
 
@@ -415,13 +418,13 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <ul class="org-ul">
 <li>checkboxes
-  <code>M-S-&lt;RET&gt;</code> 插入 checkbox
+<code>M-S-&lt;RET&gt;</code> 插入 checkbox
 </li>
 <li>archive 
-  <code>C-c C-x C-s</code> 存档当前条目
+<code>C-c C-x C-s</code> 存档当前条目
 </li>
 <li>agenda view
-  <code>M-x org-agenda</code> 一般绑定键位为 <code>C-a a</code>
+<code>M-x org-agenda</code> 一般绑定键位为 <code>C-a a</code>
 </li>
 <li>priorities
 每个 TODO 都可以设置优先级 快捷键 <code>S-&lt;UP&gt;</code> <code>S-&lt;DOWN&gt;</code>
@@ -437,6 +440,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3">后记</h2>
 <div class="outline-text-2" id="text-3">
@@ -487,6 +491,11 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs" title="deobfuscate javascript with emacs">deobfuscate javascript with... </a></span>
+              <span class="date">Jun 28, 2014</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="http://programming4fun.com/blog/emacs/firefox-plugin/2014/03/27/fm-emacs-client" title="emacs as doubanfm client">emacs as doubanfm client </a></span>
               <span class="date">Mar 27, 2014</span>
             </li>
@@ -494,11 +503,6 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
             <li>
               <span class="recent-title"><a href="http://programming4fun.com/blog/android/dev/2014/02/13/breakpad-on-android" title="breakpad on android">breakpad on android </a></span>
               <span class="date">Feb 13, 2014</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="http://programming4fun.com/blog/dev/2014/01/21/doubanfm-html5" title="doubanfm html5">doubanfm html5 </a></span>
-              <span class="date">Jan 21, 2014</span>
             </li>
         
       </ol>
