@@ -102,18 +102,18 @@ js 不像静态语言,可以编译成机器识别的本地代码, 或者对应 v
 过混淆源代码来增加阅读难度. 通常 js 的混淆方式有这么几种,
 </p>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">代码压缩</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-sec-0-1" class="outline-3">
+<h3 id="sec-0-1">代码压缩</h3>
+<div class="outline-text-3" id="text-0-1">
 <p>
 这个最好解决, 现在有很多代码格式化工具.
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">字符拼接</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-sec-0-2" class="outline-3">
+<h3 id="sec-0-2">字符拼接</h3>
+<div class="outline-text-3" id="text-0-2">
 <p>
 这种比上一种略麻烦, 因为这种代码肉眼一般很难分辨, 一堆 <code>eval</code> 和 <code>charCodeAt</code> 之
 类的东西&#x2026; 不过这也没什么难的, 用 js 解释器执行代码即可得到结果.
@@ -121,15 +121,19 @@ js 不像静态语言,可以编译成机器识别的本地代码, 或者对应 v
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">变量名混淆</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-0-3" class="outline-3">
+<h3 id="sec-0-3">变量名混淆</h3>
+<div class="outline-text-3" id="text-0-3">
 <p>
 这种是最麻烦的情况, 变量名完全被打乱, 字符串也被 unicode 编码和 ascii 编码代替,
 肉眼根本无法识别. 现在暂时的解决方案几乎只有人肉.(有好的方法请告诉我!
 </p>
+</div>
+</div>
 
-
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">解法</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 通常, 混淆工具会基于这三种方法扩展出更加复杂的混淆, 不过, 万变不离其宗.这次,
 Emacs 不会让我失望, 对于以上三种情况, 我会用 Emacs 一一给出解法. 不过在这之前, 我

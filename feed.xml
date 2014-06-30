@@ -5,7 +5,7 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-07-01T00:21:40+08:00</updated>
+<updated>2014-07-01T00:36:20+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
@@ -37,18 +37,18 @@ js 不像静态语言,可以编译成机器识别的本地代码, 或者对应 v
 过混淆源代码来增加阅读难度. 通常 js 的混淆方式有这么几种,
 &lt;/p&gt;
 
-&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-1&quot;&gt;代码压缩&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;div id=&quot;outline-container-sec-0-1&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-0-1&quot;&gt;代码压缩&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-0-1&quot;&gt;
 &lt;p&gt;
 这个最好解决, 现在有很多代码格式化工具.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-sec-2&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-2&quot;&gt;字符拼接&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-2&quot;&gt;
+&lt;div id=&quot;outline-container-sec-0-2&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-0-2&quot;&gt;字符拼接&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-0-2&quot;&gt;
 &lt;p&gt;
 这种比上一种略麻烦, 因为这种代码肉眼一般很难分辨, 一堆 &lt;code&gt;eval&lt;/code&gt; 和 &lt;code&gt;charCodeAt&lt;/code&gt; 之
 类的东西&amp;#x2026; 不过这也没什么难的, 用 js 解释器执行代码即可得到结果.
@@ -56,15 +56,19 @@ js 不像静态语言,可以编译成机器识别的本地代码, 或者对应 v
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-sec-3&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;sec-3&quot;&gt;变量名混淆&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-3&quot;&gt;
+&lt;div id=&quot;outline-container-sec-0-3&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;sec-0-3&quot;&gt;变量名混淆&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-0-3&quot;&gt;
 &lt;p&gt;
 这种是最麻烦的情况, 变量名完全被打乱, 字符串也被 unicode 编码和 ascii 编码代替,
 肉眼根本无法识别. 现在暂时的解决方案几乎只有人肉.(有好的方法请告诉我!
 &lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
-
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;解法&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
 &lt;p&gt;
 通常, 混淆工具会基于这三种方法扩展出更加复杂的混淆, 不过, 万变不离其宗.这次,
 Emacs 不会让我失望, 对于以上三种情况, 我会用 Emacs 一一给出解法. 不过在这之前, 我
