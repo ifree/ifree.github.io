@@ -106,12 +106,12 @@ doubanfm 网站上做一些交互(跳过, 喜欢之类的). 这样我在遇到�
 </p>
 
 <p>
-这完全是写着玩的, 大概介绍一下. 项目地址: <a href="https:github.com/ifree/douban-ff.git">https:github.com/ifree/douban-ff.git</a>
+这完全是写着玩的, 大概介绍一下. 项目地址: <a href="https://github.com/ifree/douban-ff.git">https://github.com/ifree/douban-ff.git</a>
 <!-- break -->  
 </p>
 
 <p>
-你可能想知道 emacs 是如何与 firefox 交互的吧. 我用了一个插件 <a href="https:github.com/bard/mozrepl">moz-repl</a>, 其内部会创
+你可能想知道 emacs 是如何与 firefox 交互的吧. 我用了一个插件 <a href="https://github.com/bard/mozrepl">moz-repl</a>, 其内部会创
 建一个 <code>server_socket</code> 对象来处理请求, 把接收到的请求作为 js 脚本执行, 所以
 emacs 只需要向它发送 js 脚本就可以完成执行操作. moz-repl 其实也是一个 ff 插件开发
 利器. 再贴一点具体实现的代码, 如下:
@@ -119,50 +119,50 @@ emacs 只需要向它发送 js 脚本就可以完成执行操作. moz-repl 其�
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(<span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">send-to-ff</span> (content)&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">"send js to firefox to execute"</span>&#57344;&#57345;&#57345;
-  (comint-send-string (inferior-moz-process)&#57344;&#57345;&#57345;
-                      content&#57344;&#57345;&#57345;
-                      )&#57344;&#57345;&#57345;
-  )&#57344;&#57345;&#57345;
-&#57344;&#57345;&#57345;
-(<span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">ff-exec-script-in-tabs</span> (script url-regex) &#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">"script injection"</span>&#57344;&#57345;&#57345;
-  (send-to-ff&#57344;&#57345;&#57345;
-   (format <span style="color: #ffa07a;">"</span>&#57344;&#57345;&#57345;
-<span style="color: #ffc0cb; font-weight: bold;">(</span><span style="color: #ffa07a;">function(script,u){</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">        [].forEach.call(gBrowser.tabs,function(itm){</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">            var ctab=itm.linkedBrowser;</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">            if(ctab.contentDocument.location.host.match(u)){</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">                var s=ctab.contentDocument.createElement('script')</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">                s.textContent=script;</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">                ctab.contentDocument.body.appendChild(s);</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">            }</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">        });        </span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">    })(\"%s\",\"%s\");</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">"</span>&#57344;&#57345;&#57345;
-script url-regex&#57344;&#57345;&#57345;
-)&#57344;&#57345;&#57345;
-   )&#57344;&#57345;&#57345;
-  )&#57344;&#57345;&#57345;
-&#57344;&#57345;&#57345;
-(<span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">fm-skip</span> ()&#57344;&#57345;&#57345;
-  (interactive)&#57344;&#57345;&#57345;
-  (fm-exec <span style="color: #ffa07a;">"DBR.act('skip')"</span>)&#57344;&#57345;&#57345;
-  )&#57344;&#57345;&#57345;
-&#57344;&#57345;&#57345;
-(<span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">fm-copy-song</span> ()&#57344;&#57345;&#57345;
-  (interactive)&#57344;&#57345;&#57345;
-  (fm-exec <span style="color: #ffa07a;">"document.title=FM.getCurrentSongInfo().url"</span>)&#57344;&#57345;&#57345;
-  (send-to-ff <span style="color: #ffa07a;">"</span>&#57344;&#57345;&#57345;
-<span style="color: #ffc0cb; font-weight: bold;">[</span><span style="color: #ffa07a;">].forEach.call(gBrowser.tabs,function(itm){</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">            var ctab=itm.linkedBrowser;</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">            if(ctab.contentDocument.location.host.match('douban\.fm')){</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">                Components.classes['@mozilla.org/widget/clipboardhelper;1']</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">                .getService(Components.interfaces.nsIClipboardHelper)</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">                .copyString(ctab.contentTitle);</span>&#57344;&#57345;&#57345;
-<span style="color: #ffa07a;">            }});"</span>&#57344;&#57345;&#57345;
-))&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span><span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">send-to-ff</span> <span style="color: #93a8c6;">(</span>content<span style="color: #93a8c6;">)</span>
+<span style="color: #ffa07a;">"send js to firefox to execute"</span>
+  <span style="color: #93a8c6;">(</span>comint-send-string <span style="color: #b0b1a3;">(</span>inferior-moz-process<span style="color: #b0b1a3;">)</span>
+                      content
+                      <span style="color: #93a8c6;">)</span>
+  <span style="color: #8c8c8c;">)</span>
+
+<span style="color: #8c8c8c;">(</span><span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">ff-exec-script-in-tabs</span> <span style="color: #93a8c6;">(</span>script url-regex<span style="color: #93a8c6;">)</span> 
+<span style="color: #ffa07a;">"script injection"</span>
+  <span style="color: #93a8c6;">(</span>send-to-ff
+   <span style="color: #b0b1a3;">(</span>format <span style="color: #ffa07a;">"</span>
+<span style="color: #ffc0cb; font-weight: bold;">(</span><span style="color: #ffa07a;">function(script,u){</span>
+<span style="color: #ffa07a;">        [].forEach.call(gBrowser.tabs,function(itm){</span>
+<span style="color: #ffa07a;">            var ctab=itm.linkedBrowser;</span>
+<span style="color: #ffa07a;">            if(ctab.contentDocument.location.host.match(u)){</span>
+<span style="color: #ffa07a;">                var s=ctab.contentDocument.createElement('script')</span>
+<span style="color: #ffa07a;">                s.textContent=script;</span>
+<span style="color: #ffa07a;">                ctab.contentDocument.body.appendChild(s);</span>
+<span style="color: #ffa07a;">            }</span>
+<span style="color: #ffa07a;">        });        </span>
+<span style="color: #ffa07a;">    })(\"%s\",\"%s\");</span>
+<span style="color: #ffa07a;">"</span>
+script url-regex
+<span style="color: #b0b1a3;">)</span>
+   <span style="color: #93a8c6;">)</span>
+  <span style="color: #8c8c8c;">)</span>
+
+<span style="color: #8c8c8c;">(</span><span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">fm-skip</span> <span style="color: #93a8c6;">()</span>
+  <span style="color: #93a8c6;">(</span>interactive<span style="color: #93a8c6;">)</span>
+  <span style="color: #93a8c6;">(</span>fm-exec <span style="color: #ffa07a;">"DBR.act('skip')"</span><span style="color: #93a8c6;">)</span>
+  <span style="color: #8c8c8c;">)</span>
+
+<span style="color: #8c8c8c;">(</span><span style="color: #00ffff;">defun</span> <span style="color: #87cefa;">fm-copy-song</span> <span style="color: #93a8c6;">()</span>
+  <span style="color: #93a8c6;">(</span>interactive<span style="color: #93a8c6;">)</span>
+  <span style="color: #93a8c6;">(</span>fm-exec <span style="color: #ffa07a;">"document.title=FM.getCurrentSongInfo().url"</span><span style="color: #93a8c6;">)</span>
+  <span style="color: #93a8c6;">(</span>send-to-ff <span style="color: #ffa07a;">"</span>
+<span style="color: #ffc0cb; font-weight: bold;">[</span><span style="color: #ffa07a;">].forEach.call(gBrowser.tabs,function(itm){</span>
+<span style="color: #ffa07a;">            var ctab=itm.linkedBrowser;</span>
+<span style="color: #ffa07a;">            if(ctab.contentDocument.location.host.match('douban\.fm')){</span>
+<span style="color: #ffa07a;">                Components.classes['@mozilla.org/widget/clipboardhelper;1']</span>
+<span style="color: #ffa07a;">                .getService(Components.interfaces.nsIClipboardHelper)</span>
+<span style="color: #ffa07a;">                .copyString(ctab.contentTitle);</span>
+<span style="color: #ffa07a;">            }});"</span>
+<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 
@@ -212,6 +212,11 @@ script url-regex&#57344;&#57345;&#57345;
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="http://programming4fun.com/blog/dev/2014/08/15/introduce-to-docker" title="Introduce to docker">Introduce to docker </a></span>
+              <span class="date">Aug 15, 2014</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs" title="deobfuscate javascript with emacs">deobfuscate javascript with... </a></span>
               <span class="date">Jun 28, 2014</span>
             </li>
@@ -219,11 +224,6 @@ script url-regex&#57344;&#57345;&#57345;
             <li>
               <span class="recent-title"><a href="http://programming4fun.com/blog/emacs/firefox-plugin/2014/03/27/fm-emacs-client" title="emacs as doubanfm client">emacs as doubanfm client </a></span>
               <span class="date">Mar 27, 2014</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="http://programming4fun.com/blog/android/dev/2014/02/13/breakpad-on-android" title="breakpad on android">breakpad on android </a></span>
-              <span class="date">Feb 13, 2014</span>
             </li>
         
       </ol>

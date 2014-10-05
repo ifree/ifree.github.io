@@ -9,6 +9,13 @@
 
     
     <url>
+        <loc>http://programming4fun.com/blog/dev/2014/08/15/introduce-to-docker</loc>
+	<lastmod>2014-08-15T00:00:00+08:00</lastmod>
+	<changefreq>monthly</changefreq>
+	<priority>0.2</priority>
+    </url>
+    
+    <url>
         <loc>http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs</loc>
 	<lastmod>2014-06-28T00:00:00+08:00</lastmod>
 	<changefreq>monthly</changefreq>

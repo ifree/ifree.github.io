@@ -110,7 +110,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <p>
 现在我介绍一些 org-mode 的基础知识,以便你能快速入门, 想要更深入的了解,
-多看看<a href="http:orgmode.org/#docs">文档</a>吧, org-mode 的文档还是比较丰富的.  
+多看看<a href="http://orgmode.org/#docs">文档</a>吧, org-mode 的文档还是比较丰富的.  
 </p>
 </div>
 
@@ -276,7 +276,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(directory-files <span style="color: #ffa07a;">"~/Dev/org/plan"</span> t <span style="color: #ffa07a;">"\.org$"</span>)&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span>directory-files <span style="color: #ffa07a;">"~/Dev/org/plan"</span> t <span style="color: #ffa07a;">"\.org$"</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 
@@ -316,10 +316,10 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(setq org-todo-keywords&#57344;&#57345;&#57345;
-      (quote ((sequence <span style="color: #ffa07a;">"TODO(t)"</span> <span style="color: #ffa07a;">"STARTED(s)"</span> <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"DONE(d!/!)"</span> )<span style="color: #ff4500;">;</span><span style="color: #ff4500;">general tasks</span>&#57344;&#57345;&#57345;
-              (sequence <span style="color: #ffa07a;">"CODING"</span> <span style="color: #ffa07a;">"TESING"</span> <span style="color: #ffa07a;">"REFACTOR(!/@)"</span>  <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"REVIEW(/@)"</span>)<span style="color: #ff4500;">;</span><span style="color: #ff4500;">coding</span>&#57344;&#57345;
-              (sequence <span style="color: #ffa07a;">"WAITING(w@/!)"</span> <span style="color: #ffa07a;">"SOMEDAY(S)"</span> <span style="color: #ffa07a;">"PROJECT"</span> <span style="color: #ffa07a;">"DELEGATED(@/)"</span> <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"CANCELLED(c@/!)"</span>))))<span style="color: #ff4500;">;</span><span style="color: #ff4500;">task states</span>&#57344;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span>setq org-todo-keywords
+      <span style="color: #93a8c6;">(</span>quote <span style="color: #b0b1a3;">(</span><span style="color: #97b098;">(</span>sequence <span style="color: #ffa07a;">"TODO(t)"</span> <span style="color: #ffa07a;">"STARTED(s)"</span> <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"DONE(d!/!)"</span> <span style="color: #97b098;">)</span><span style="color: #ff4500;">;</span><span style="color: #ff4500;">general tasks</span>
+              <span style="color: #97b098;">(</span>sequence <span style="color: #ffa07a;">"CODING"</span> <span style="color: #ffa07a;">"TESING"</span> <span style="color: #ffa07a;">"REFACTOR(!/@)"</span>  <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"REVIEW(/@)"</span><span style="color: #97b098;">)</span><span style="color: #ff4500;">;</span><span style="color: #ff4500;">coding</span>
+              <span style="color: #97b098;">(</span>sequence <span style="color: #ffa07a;">"WAITING(w@/!)"</span> <span style="color: #ffa07a;">"SOMEDAY(S)"</span> <span style="color: #ffa07a;">"PROJECT"</span> <span style="color: #ffa07a;">"DELEGATED(@/)"</span> <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"CANCELLED(c@/!)"</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span><span style="color: #ff4500;">;</span><span style="color: #ff4500;">task states</span>
 </pre>
 </div>
 
@@ -328,23 +328,23 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(setq org-tag-alist '((<span style="color: #b0c4de;">:startgroup</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"@work"</span> . ?w) &#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"@home"</span> . ?h)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"@coffee shop"</span> . ?t)&#57344;&#57345;&#57345;
-                      (<span style="color: #b0c4de;">:endgroup</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #b0c4de;">:startgroup</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"laptop"</span> . ?l)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"pc"</span> . ?p)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"phone"</span> .?P)&#57344;&#57345;&#57345;
-                      (<span style="color: #b0c4de;">:endgroup</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #b0c4de;">:startgroup</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"dev"</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"personal"</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"blog"</span> . nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #ffa07a;">"thought"</span> .nil)&#57344;&#57345;&#57345;
-                      (<span style="color: #b0c4de;">:endgroup</span> . nil)&#57344;&#57345;&#57345;
-                      ))&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span>setq org-tag-alist '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #b0c4de;">:startgroup</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"@work"</span> . ?w<span style="color: #b0b1a3;">)</span> 
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"@home"</span> . ?h<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"@coffee shop"</span> . ?t<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #b0c4de;">:endgroup</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #b0c4de;">:startgroup</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"laptop"</span> . ?l<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"pc"</span> . ?p<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"phone"</span> .?P<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #b0c4de;">:endgroup</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #b0c4de;">:startgroup</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"dev"</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"personal"</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"blog"</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"thought"</span> .nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #b0b1a3;">(</span><span style="color: #b0c4de;">:endgroup</span> . nil<span style="color: #b0b1a3;">)</span>
+                      <span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 
@@ -368,13 +368,13 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(setq org-agenda-custom-commands&#57344;&#57345;&#57345;
-      '((<span style="color: #ffa07a;">"c"</span> <span style="color: #ffa07a;">"things I should today"</span> alltodo <span style="color: #ffa07a;">""</span>&#57344;&#57345;&#57345;
-         ((org-agenda-overriding-header <span style="color: #ffa07a;">"Hey man, you need finish these today!"</span>)&#57345;
-          (org-agenda-files '(<span style="color: #ffa07a;">"~/Dev/org/plan/today.org"</span>))))&#57344;&#57345;&#57345;
-        (<span style="color: #ffa07a;">"p"</span> <span style="color: #ffa07a;">"pending todo"</span> todo <span style="color: #ffa07a;">"WAITING|SOMEDAY"</span>)&#57344;&#57345;&#57345;
-        (<span style="color: #ffa07a;">"A"</span> <span style="color: #ffa07a;">"view archieved task"</span> todo <span style="color: #ffa07a;">"CANCELLED|DELEGATED|DONE"</span>&#57344;&#57345;&#57345;
-         ((org-agenda-files (directory-files-rec <span style="color: #ffa07a;">"~/Dev/org"</span> <span style="color: #ffa07a;">"\.archive$"</span>))))))&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span>setq org-agenda-custom-commands
+      '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"c"</span> <span style="color: #ffa07a;">"things I should today"</span> alltodo <span style="color: #ffa07a;">""</span>
+         <span style="color: #97b098;">(</span><span style="color: #aebed8;">(</span>org-agenda-overriding-header <span style="color: #ffa07a;">"Hey man, you need finish these today!"</span><span style="color: #aebed8;">)</span>
+          <span style="color: #aebed8;">(</span>org-agenda-files '<span style="color: #b0b0b3;">(</span><span style="color: #ffa07a;">"~/Dev/org/plan/today.org"</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span>
+        <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"p"</span> <span style="color: #ffa07a;">"pending todo"</span> todo <span style="color: #ffa07a;">"WAITING|SOMEDAY"</span><span style="color: #b0b1a3;">)</span>
+        <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"A"</span> <span style="color: #ffa07a;">"view archieved task"</span> todo <span style="color: #ffa07a;">"CANCELLED|DELEGATED|DONE"</span>
+         <span style="color: #97b098;">(</span><span style="color: #aebed8;">(</span>org-agenda-files <span style="color: #b0b0b3;">(</span>directory-files-rec <span style="color: #ffa07a;">"~/Dev/org"</span> <span style="color: #ffa07a;">"\.archive$"</span><span style="color: #b0b0b3;">)</span><span style="color: #aebed8;">)</span><span style="color: #97b098;">)</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 
@@ -386,12 +386,12 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(setq org-capture-templates&#57344;&#57345;&#57345;
-      '((<span style="color: #ffa07a;">"t"</span> <span style="color: #ffa07a;">"Today's TODO"</span> entry (file+headline org-default-notes-file <span style="color: #ffa07a;">"&#27599;&#26085;TODO!"</span>)&#57344;&#57345;
-         <span style="color: #ffa07a;">"** TODO %?\n %i\n %T"</span>)&#57344;&#57345;&#57345;
-        (<span style="color: #ffa07a;">"T"</span> <span style="color: #ffa07a;">"Thoughts"</span> entry &#57344;&#57345;&#57345;
-         (file+headline (concat org-directory <span style="color: #ffa07a;">"/plan/personal.org"</span> ) <span style="color: #ffa07a;">"random thoughts"</span>)&#57344;&#57345;
-         <span style="color: #ffa07a;">"** %?\n %i\n %T"</span>)))&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span>setq org-capture-templates
+      '<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"t"</span> <span style="color: #ffa07a;">"Today's TODO"</span> entry <span style="color: #97b098;">(</span>file+headline org-default-notes-file <span style="color: #ffa07a;">"&#27599;&#26085;TODO!"</span><span style="color: #97b098;">)</span>
+         <span style="color: #ffa07a;">"** TODO %?\n %i\n %T"</span><span style="color: #b0b1a3;">)</span>
+        <span style="color: #b0b1a3;">(</span><span style="color: #ffa07a;">"T"</span> <span style="color: #ffa07a;">"Thoughts"</span> entry 
+         <span style="color: #97b098;">(</span>file+headline <span style="color: #aebed8;">(</span>concat org-directory <span style="color: #ffa07a;">"/plan/personal.org"</span> <span style="color: #aebed8;">)</span> <span style="color: #ffa07a;">"random thoughts"</span><span style="color: #97b098;">)</span>
+         <span style="color: #ffa07a;">"** %?\n %i\n %T"</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 </div>
@@ -409,7 +409,7 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
 
 <div class="org-src-container">
 
-<pre class="src src-emacs-lisp">(sequence <span style="color: #ffa07a;">"CODING"</span> <span style="color: #ffa07a;">"TESING"</span> <span style="color: #ffa07a;">"REFACTOR(!/@)"</span>  <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"REVIEW(/@)"</span>)&#57344;&#57345;&#57345;
+<pre class="src src-emacs-lisp"><span style="color: #8c8c8c;">(</span>sequence <span style="color: #ffa07a;">"CODING"</span> <span style="color: #ffa07a;">"TESING"</span> <span style="color: #ffa07a;">"REFACTOR(!/@)"</span>  <span style="color: #ffa07a;">"|"</span> <span style="color: #ffa07a;">"REVIEW(/@)"</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 </li>
@@ -491,6 +491,11 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
         <p class="list-title">Recent Posts</p>
          <!-- for1 -->
             <li>
+              <span class="recent-title"><a href="http://programming4fun.com/blog/dev/2014/08/15/introduce-to-docker" title="Introduce to docker">Introduce to docker </a></span>
+              <span class="date">Aug 15, 2014</span>
+            </li>
+         <!-- for1 -->
+            <li>
               <span class="recent-title"><a href="http://programming4fun.com/blog/dev/2014/06/28/deobfuscate-javascript-with-emacs" title="deobfuscate javascript with emacs">deobfuscate javascript with... </a></span>
               <span class="date">Jun 28, 2014</span>
             </li>
@@ -498,11 +503,6 @@ TODO list, 项目计划工具, 写作工具等等. 通常我用它来写文档,�
             <li>
               <span class="recent-title"><a href="http://programming4fun.com/blog/emacs/firefox-plugin/2014/03/27/fm-emacs-client" title="emacs as doubanfm client">emacs as doubanfm client </a></span>
               <span class="date">Mar 27, 2014</span>
-            </li>
-         <!-- for1 -->
-            <li>
-              <span class="recent-title"><a href="http://programming4fun.com/blog/android/dev/2014/02/13/breakpad-on-android" title="breakpad on android">breakpad on android </a></span>
-              <span class="date">Feb 13, 2014</span>
             </li>
         
       </ol>
