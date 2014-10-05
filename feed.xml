@@ -5,12 +5,74 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-10-05T09:32:59+08:00</updated>
+<updated>2014-10-05T12:01:30+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[control android via Emacs]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/dev/2014/10/05/control-android-via-emacs" />
+  <id>http://programming4fun.com/blog/dev/2014/10/05/control-android-via-emacs</id>
+  <published>2014-10-05T00:00:00+08:00</published>
+  <updated>2014-10-05T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+最近一段时间忙得不可开交, 所以没抽出时间来更新博客. 前几个月我入了一个 nexus
+7(2013) 用来在挤地铁公交的时候看书. 试用的这段时间很满意, 续航, 屏幕, app 都不错.
+加上 &lt;a href=&quot;https://github.com/rovo89/XposedBridge&quot;&gt;xposed framework&lt;/a&gt; 让我更加自如的扩展我的设备, 由于 android 的词典很多都不支持
+跨 app 选中取词, 我就用它写了个插件, 读 paper 无压力了.
+&lt;/p&gt;
+
+&lt;p&gt;
+ 题外话完了, 进入正题. 很多时候我会在 n7 上测试代码, 典型的场景就是用 &lt;a href=&quot;https://matt.ucc.asn.au/dropbear/dropbear.html&quot;&gt;dropbear&lt;/a&gt; 开
+一个 ssh 服务然后本地电脑连进去. 不过在测试 opengl 代码的时候就很不方便, 每次都要
+export display. 后来, 我发现了 &lt;a href=&quot;http://code.google.com/p/wifikeyboard/&quot;&gt;wifi-keyboard&lt;/a&gt;, 一个 android 输入法, 你可以在电脑上
+控制 android 的输入, 这样就可以愉快的写代码了. 但是, wifi-keyboard 需要开一个浏览
+器, 不方便, 所以我写了个 emacs 插件, 代替浏览器 &amp;#x2013; &lt;a href=&quot;https://github.com/ifree/emacs-wifi-keyboard&quot;&gt;emacs-wifi-keyboard&lt;/a&gt;
+. &lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+现在我介绍一下这个插件. 主用功能有, 
+&lt;/p&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;在 Emacs 下控制 android 输入
+&lt;/li&gt;
+&lt;li&gt;通过 Emacs buffer 发送接收文字
+&lt;/li&gt;
+&lt;li&gt;Keyboard navigation support; 
+&lt;/li&gt;
+&lt;li&gt;Emacs style key bindings. 
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+基本上能用 emacs 来控制 android. 
+&lt;/p&gt;
+
+&lt;p&gt;
+之前我看过有人写过用 emacs 控制 android 的文章, 主要实现是 intent 交互. 感觉这样
+不是太好, 也不方便, 我当时推荐的做法是 accessibility service, 这样确实可以, 但是
+不太简洁. 现在如果实现一个输入法, 在输入法激活的状态, 像系统发送按键事件. android 的
+可访问性服务能正确处理相应的按键事件, 从而做到用输入法控制 android. 所以通过
+wifi-keyboard 你可以用电脑控制的你 android 设备, 移动, 运行 app , 任务切换, 发短
+信都不在话下. 
+&lt;/p&gt;
+
+&lt;p&gt;
+下一步的打算, 移除 wifi-keyboard 的依赖, 直接使用 /dev/uinput 来控制 android 的输
+入, 实现起来也很简单, 也省去了切换输入法的步骤. 我准备使用 native executable 的方
+式, 安装 apk 也挺麻烦的. 同时使用更加高效的 socket 而不是 http.
+&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/dev/2014/10/05/control-android-via-emacs&quot;&gt;control android via Emacs&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on October 05, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>

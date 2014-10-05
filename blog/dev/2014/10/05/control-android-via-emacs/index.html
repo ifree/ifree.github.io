@@ -3,15 +3,15 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
-<title>New Start &#8211; Programming for fun!</title>
-<meta name="description" content="在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 is-programmer,cnblogs, 但是最后统统烂尾. 中断博客的原因是因为我觉得自己胸无点墨, 写作技能又笨拙, 继续写下去很丢面子. 进而选择了本地博客,本地 ...">
-<meta name="keywords" content="">
+<title>control android via Emacs &#8211; Programming for fun!</title>
+<meta name="description" content="最近一段时间忙得不可开交, 所以没抽出时间来更新博客. 前几个月我入了一个 nexus7(2013) 用来在挤地铁公交的时候看书. 试用的这段时间很满意, 续航, 屏幕, app 都不错.加上 xposed framework 让我更...">
+<meta name="keywords" content="emacs, android">
 
 
 <meta property="og:locale" content="en_US">
-<meta property="og:title" content="New Start &#8211; Programming for fun!">
-<meta property="og:description" content="在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 is-programmer,cnblogs, 但是最后统统烂尾. 中断博客的原因是因为我觉得自己胸无点墨, 写作技能又笨拙, 继续写下去很丢面子. 进而选择了本地博客,本地 ...">
-<meta property="og:url" content="http://programming4fun.com/blog/daily/2013/12/24/new-start">
+<meta property="og:title" content="control android via Emacs &#8211; Programming for fun!">
+<meta property="og:description" content="最近一段时间忙得不可开交, 所以没抽出时间来更新博客. 前几个月我入了一个 nexus7(2013) 用来在挤地铁公交的时候看书. 试用的这段时间很满意, 续航, 屏幕, app 都不错.加上 xposed framework 让我更...">
+<meta property="og:url" content="http://programming4fun.com/blog/dev/2014/10/05/control-android-via-emacs">
 <meta property="og:site_name" content="Programming for fun!">
 
 
@@ -82,31 +82,58 @@
       <article class="wrap post">
         <header class="post-header">
           <hgroup>
-            <h1>New Start</h1>
-            <p class="date">Dec 24, 2013</p>
+            <h1>control android via Emacs</h1>
+            <p class="date">Oct 05, 2014</p>
             <p class="intro"></p>
           </hgroup>
         </header>
 
         <p>
-在挣扎了许久之后,我终于又重建了博客. 在这之前,我尝试过 <a href="http://ifree.is-programmer.com">is-programmer</a>,
-<a href="http://ifree.cnblogs.com/">cnblogs</a>, 但是最后统统烂尾. 中断博客的原因是因为我觉得自己胸无点墨, 写作
-技能又笨拙, 继续写下去很丢面子. 进而选择了本地博客,本地 wiki 来做笔记,
-记录思想. 可是在一次意外中, 由于我的疏忽, 丢失了硬盘的所有资料. 我开始
-尝试一些云端解决方案, 比如 dropbox, evernote, gdrive, 加上这两年痴迷于
-emacs, 所以我用 emacs 的 org-mode 来做日常的记录, 通过 dropbox 同步. 再
-后来, 也就是现在, 我决定摆脱伸手党这个称谓, 把自己的思考和别人分享, 接
-受批评, 共同进步.<!-- break -->
+最近一段时间忙得不可开交, 所以没抽出时间来更新博客. 前几个月我入了一个 nexus
+7(2013) 用来在挤地铁公交的时候看书. 试用的这段时间很满意, 续航, 屏幕, app 都不错.
+加上 <a href="https://github.com/rovo89/XposedBridge">xposed framework</a> 让我更加自如的扩展我的设备, 由于 android 的词典很多都不支持
+跨 app 选中取词, 我就用它写了个插件, 读 paper 无压力了.
 </p>
 
 <p>
-本博客是基于 jekyll 静态博客, 使用 <a href="https://github.com/ColeTownsend/Balzac-for-Jekyll">BALZAC</a> theme 并做了一些小修改. 博
-客内容主要是游戏编程,c/c++ , unix like system, emacs 和函数式编程相关的
-内容. 
+ 题外话完了, 进入正题. 很多时候我会在 n7 上测试代码, 典型的场景就是用 <a href="https://matt.ucc.asn.au/dropbear/dropbear.html">dropbear</a> 开
+一个 ssh 服务然后本地电脑连进去. 不过在测试 opengl 代码的时候就很不方便, 每次都要
+export display. 后来, 我发现了 <a href="http://code.google.com/p/wifikeyboard/">wifi-keyboard</a>, 一个 android 输入法, 你可以在电脑上
+控制 android 的输入, 这样就可以愉快的写代码了. 但是, wifi-keyboard 需要开一个浏览
+器, 不方便, 所以我写了个 emacs 插件, 代替浏览器 &#x2013; <a href="https://github.com/ifree/emacs-wifi-keyboard">emacs-wifi-keyboard</a>
+. <!-- break -->
 </p>
 
 <p>
-2013年就要过去, 希望在新的一年里活的开心!
+现在我介绍一下这个插件. 主用功能有, 
+</p>
+<ul class="org-ul">
+<li>在 Emacs 下控制 android 输入
+</li>
+<li>通过 Emacs buffer 发送接收文字
+</li>
+<li>Keyboard navigation support; 
+</li>
+<li>Emacs style key bindings. 
+</li>
+</ul>
+<p>
+基本上能用 emacs 来控制 android. 
+</p>
+
+<p>
+之前我看过有人写过用 emacs 控制 android 的文章, 主要实现是 intent 交互. 感觉这样
+不是太好, 也不方便, 我当时推荐的做法是 accessibility service, 这样确实可以, 但是
+不太简洁. 现在如果实现一个输入法, 在输入法激活的状态, 像系统发送按键事件. android 的
+可访问性服务能正确处理相应的按键事件, 从而做到用输入法控制 android. 所以通过
+wifi-keyboard 你可以用电脑控制的你 android 设备, 移动, 运行 app , 任务切换, 发短
+信都不在话下. 
+</p>
+
+<p>
+下一步的打算, 移除 wifi-keyboard 的依赖, 直接使用 /dev/uinput 来控制 android 的输
+入, 实现起来也很简单, 也省去了切换输入法的步骤. 我准备使用 native executable 的方
+式, 安装 apk 也挺麻烦的. 同时使用更加高效的 socket 而不是 http.
 </p>
 
 
