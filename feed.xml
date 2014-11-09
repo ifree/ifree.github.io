@@ -5,12 +5,60 @@
 <generator uri="https://github.com/mojombo/jekyll">Jekyll</generator>
 <link rel="self" type="application/atom+xml" href="http://programming4fun.com/feed.xml" />
 <link rel="alternate" type="text/html" href="http://programming4fun.com" />
-<updated>2014-10-05T12:01:30+08:00</updated>
+<updated>2014-11-09T16:43:02+08:00</updated>
 <id>http://programming4fun.com/</id>
 <author>
   <name>Frei Zhang</name>
   <uri>http://programming4fun.com/</uri>
 </author>
+
+
+<entry>
+  <title type="html"><![CDATA[leetcode.el]]></title>
+  <link rel="alternate" type="text/html" href="http://programming4fun.com/blog/dev/2014/11/09/leet-code.el" />
+  <id>http://programming4fun.com/blog/dev/2014/11/09/leet-code.el</id>
+  <published>2014-11-09T00:00:00+08:00</published>
+  <updated>2014-11-09T00:00:00+08:00</updated>
+  <author>
+    <name>Frei Zhang</name>
+    <uri>http://programming4fun.com</uri>
+  </author>
+  <content type="html">&lt;p&gt;
+以前我写过一个 meacs 的 &lt;a href=&quot;https://github.com/ifree/emacs-online-judge&quot;&gt;oj 工具&lt;/a&gt; 今天又写了一个 &lt;a href=&quot;https://github.com/ifree/leetcode.el&quot;&gt;leet-code.el&lt;/a&gt;, 至于为什么不继续扩
+展以前的而重新写一个呢. 主要原因是我现在 elisp 的功力有限, 没法把代码写的很漂亮.
+以后有机会了可能会把他们合并了, 但是, 现在就先这样吧.
+&lt;/p&gt;
+
+&lt;p&gt;
+关于 leetcode, 我断断续续刷过一段时间, 里面的题也比较经典, 也有比较难的. 准备继
+续刷了, 每天再挤一个小时出来 orz&amp;#x2026; 关于这个工具, 主要是让你能更方便专注的刷题,
+也节省浏览器和编辑器之间的切换. &lt;!-- break --&gt;
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-sec-1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;sec-1&quot;&gt;主要功能&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-1&quot;&gt;
+&lt;ul class=&quot;org-ul&quot;&gt;
+&lt;li&gt;登录
+&lt;/li&gt;
+&lt;li&gt;提交代码(文件, region)
+&lt;/li&gt;
+&lt;li&gt;查看提交结果
+&lt;/li&gt;
+&lt;li&gt;获取题目说明
+&lt;/li&gt;
+&lt;li&gt;获取默认代码
+
+&lt;p&gt;
+有什么问题就直接提 issue 吧, 希望这个工具能帮你节约一点时间.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://programming4fun.com/blog/dev/2014/11/09/leet-code.el&quot;&gt;leetcode.el&lt;/a&gt; was originally published by Frei Zhang at &lt;a href=&quot;http://programming4fun.com&quot;&gt;Programming for fun!&lt;/a&gt; on November 09, 2014.&lt;/p&gt;</content>
+</entry>
 
 
 <entry>
